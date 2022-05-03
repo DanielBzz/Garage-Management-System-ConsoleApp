@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
         {
             if (overTheMaxCapacity(i_AmountToAdd))
             {
-                // throw exception
+                throw new ValueOutOfRangeException(r_MaxEnergyCapacity, 0, m_CurrentEnergyCapacity + i_AmountToAdd);
             }
 
             m_CurrentEnergyCapacity += i_AmountToAdd;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -9,14 +6,35 @@ namespace Ex03.GarageLogic
     {
         private float m_MaxValue;
         private float m_MinValue;
-        public string m_ErorMsg;
-        //
-        public ValueOutOfRangeException(float x)
+
+        public float MaxValue
         {
-            if (m_MaxValue < x)
-                m_ErorMsg = "over the max";
-            if (m_MinValue > x)
-                m_ErorMsg = "under the law";
+            get
+            {
+                return m_MaxValue;
+            }
+        }
+
+        public float MinValue
+        {
+            get
+            {
+                return m_MinValue;
+            }
+        }
+
+        public ValueOutOfRangeException(float i_Max, float i_Min, float i_value)
+            : base(string.Format("Exceeds {0} the {1}", i_Max < i_value ? "over" : "under", i_Max < i_value ? "maximum" : "minimum"))
+        {
+            m_MaxValue = i_Max;
+            m_MinValue = i_Min;
+        }
+
+        public ValueOutOfRangeException(float i_Max, float i_Min, string i_Message)
+           : base(i_Message)
+        {
+            m_MaxValue = i_Max;
+            m_MinValue = i_Min;
         }
     }
 }
