@@ -47,7 +47,12 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return base.ToString();
+            string vehicleInfo = string.Format(@"Vehicle model: {0}
+Vehicle Plate Number: {1}
+{2}
+{3}", r_Model, r_ID, m_Tyres[0].ToString(), r_Engine.ToString());
+
+            return vehicleInfo;
         }
 
         public void InflateTyresToMax()

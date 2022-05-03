@@ -7,13 +7,9 @@ namespace Ex03.GarageLogic
 {
     public class ElectricEngine : Engine
     {
-        private readonly float r_MaxBatteryLife;
-        private float m_CurrentBattery;
-
         public ElectricEngine(float i_MaxBattery)
+            : base(i_MaxBattery)
         {
-            r_MaxBatteryLife = i_MaxBattery;
-            m_CurrentBattery = 0;
         }
 
         public void Charge(float i_AmountToAdd)
@@ -23,13 +19,15 @@ namespace Ex03.GarageLogic
                 // throw exception
             }
 
-            m_CurrentBattery += i_AmountToAdd;
-            EnergyPrecentage = (m_CurrentBattery / r_MaxBatteryLife) * 100;
+            m_CurrentEnergyCapacity += i_AmountToAdd;
         }
 
-        private bool overTheMaxCapacity(float i_AmountToAdd)
+        public override string ToString()
         {
-            return r_MaxBatteryLife >= m_CurrentBattery + i_AmountToAdd;
+            string engineInfo = string.Format(@"Engine powered by : Electric
+{0}", base.ToString());
+
+            return engineInfo;
         }
     }
 }

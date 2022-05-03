@@ -17,5 +17,15 @@ namespace Ex03.GarageLogic
             m_LicenseType = i_LicenseType;
             m_EngineCC = i_EngineCC;
         }
+
+        public override string ToString()
+        {
+            string mototbikeInfo = string.Format(@"Vehicle is motorbike.
+EngineCC: {0}.
+License type: {1}.
+{2}", m_EngineCC, m_LicenseType, base.ToString());
+
+            return mototbikeInfo;
+        }
     }
 }

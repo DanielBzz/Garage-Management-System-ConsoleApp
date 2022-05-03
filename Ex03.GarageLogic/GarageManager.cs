@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
         {
             Client newClient;
 
-            if (!isVehicleInGarage(i_Vehicle.ID, out newClient)) // can do just add and it will throw exception
+            if (!isVehicleInGarage(i_Vehicle.ID, out newClient))
             {
                 newClient = new Client(i_Name, i_PhoneNumber, i_Vehicle);
                 m_CurrentClients.Add(i_Vehicle.ID, newClient);

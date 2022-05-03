@@ -4,7 +4,7 @@
     {
         private readonly float r_MaxAirPressure;
         private float m_CurrentAirPressure;
-        private string m_Manufacturer;
+        private string r_Manufacturer;
 
         public float MaxAirPressure
         {
@@ -26,7 +26,12 @@
         {
             get
             {
-                return m_Manufacturer;
+                return r_Manufacturer;
+            }
+
+            set
+            {
+                r_Manufacturer = value;
             }
         }
 
@@ -40,8 +45,17 @@
             }
             else
             {
-                // throw some exception that over the limit ...
+                throw new ValueOutOfRangeException(i_NewPressure);
             }
+        }
+
+        public override string ToString()
+        {
+            string tyreInfo = string.Format(@"Tyre manufacturer: {0}.
+Tyre max air pressure: {1}.
+Tyre current air pressure: {2}.", r_Manufacturer, r_MaxAirPressure, m_CurrentAirPressure);
+
+            return tyreInfo;
         }
     }
 }

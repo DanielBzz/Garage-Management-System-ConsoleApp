@@ -7,19 +7,31 @@ namespace Ex03.GarageLogic
 {
     public abstract class Engine
     {
-        private float m_CurrentEnergyPrecentage = 0;        // make enum maybe of fullTank = 100 , EmptyTank = 0.
+        protected readonly float r_MaxEnergyCapacity; // make enum maybe of fullTank = 100 , EmptyTank = 0.
+        protected float m_CurrentEnergyCapacity;
+
+        public Engine(float i_MaxCapacity)
+        {
+            r_MaxEnergyCapacity = i_MaxCapacity;
+            m_CurrentEnergyCapacity = 0;
+        }
 
         public float EnergyPrecentage
         {
             get
             {
-                return m_CurrentEnergyPrecentage;
+                return (m_CurrentEnergyCapacity / r_MaxEnergyCapacity) * 100;
             }
+        }
 
-            set
-            {
-                m_CurrentEnergyPrecentage = value;
-            }
+        public override string ToString()
+        {
+            return string.Format(@"{0}% energy left", EnergyPrecentage);
+        }
+
+        protected bool overTheMaxCapacity(float i_AmountToAdd)
+        {
+            return r_MaxEnergyCapacity >= m_CurrentEnergyCapacity + i_AmountToAdd;
         }
     }
 }

@@ -8,14 +8,11 @@ namespace Ex03.GarageLogic
     public class GasEngine : Engine
     {
         private readonly eFuelType r_FuelType;
-        private readonly float r_MaxFuelCapacity;
-        private float m_CurrentFuelCapacity;
 
         public GasEngine(eFuelType i_FuelType, float i_MaxCapacity)
+            : base(i_MaxCapacity)
         {
             r_FuelType = i_FuelType;
-            r_MaxFuelCapacity = i_MaxCapacity;
-            m_CurrentFuelCapacity = 0;
         }
 
         public void Refuel(float i_AmountToAdd, eFuelType i_FuelType)
@@ -30,13 +27,16 @@ namespace Ex03.GarageLogic
                 // throw exception
             }
 
-            m_CurrentFuelCapacity += i_AmountToAdd;
-            EnergyPrecentage = (m_CurrentFuelCapacity / r_MaxFuelCapacity) * 100;
+            m_CurrentEnergyCapacity += i_AmountToAdd;
         }
 
-        private bool overTheMaxCapacity(float i_AmountToAdd)
+        public override string ToString()
         {
-            return r_MaxFuelCapacity >= m_CurrentFuelCapacity + i_AmountToAdd;
+            string engineInfo = string.Format(@"Engine powered by : Fuel
+Fuel type : {0}
+{1}", r_FuelType, base.ToString());
+
+            return engineInfo;
         }
     }
 }
