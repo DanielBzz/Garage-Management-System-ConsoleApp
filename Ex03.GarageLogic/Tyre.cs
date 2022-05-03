@@ -45,7 +45,7 @@
             }
             else
             {
-                throw new ValueOutOfRangeException(i_NewPressure);
+                throw new ValueOutOfRangeException(MaxAirPressure);
             }
         }
 
