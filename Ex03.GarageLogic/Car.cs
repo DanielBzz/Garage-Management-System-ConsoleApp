@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ex03GarageLogic
+namespace Ex03.GarageLogic
 {
-    class Car
+    public class Car : Vehicle
     {
-        eCarColor m_Color;
-        eCarNumOfDoors m_NumOfDoors;
+        private const int k_NumOfWheels = 4;
+        private readonly eCarNumOfDoors r_NumOfDoors;
+        private eCarColor m_Color;
+
+        public Car(string i_Model, string i_ID, Engine i_Engine, eCarColor i_CarColor, eCarNumOfDoors i_NumOfDoors)
+            : base(i_Model, i_ID, k_NumOfWheels, i_Engine)
+        {
+            m_Color = i_CarColor;
+            r_NumOfDoors = i_NumOfDoors;
+        }
     }
 }

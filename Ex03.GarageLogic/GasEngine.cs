@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ex03GarageLogic
+namespace Ex03.GarageLogic
 {
-    public class GasEngine : Vehicle
+    public class GasEngine : Engine
     {
         private readonly eFuelType r_FuelType;
         private readonly float r_MaxFuelCapacity;
         private float m_CurrentFuelCapacity;
 
-        public GasEngine(string i_Model, string i_ID, int i_NumOfTyres, eFuelType i_FuelType, float i_MaxCapacity)
-            : base(i_Model, i_ID, i_NumOfTyres)
+        public GasEngine(eFuelType i_FuelType, float i_MaxCapacity)
         {
             r_FuelType = i_FuelType;
             r_MaxFuelCapacity = i_MaxCapacity;
@@ -21,7 +20,7 @@ namespace Ex03GarageLogic
 
         public void Refuel(float i_AmountToAdd, eFuelType i_FuelType)
         {
-            if (!EqualsFuelType(i_FuelType))
+            if (!r_FuelType.Equals(i_FuelType))
             {
                 // throw exception
             }
@@ -39,11 +38,5 @@ namespace Ex03GarageLogic
         {
             return r_MaxFuelCapacity >= m_CurrentFuelCapacity + i_AmountToAdd;
         }
-
-        private bool EqualsFuelType(eFuelType i_FuelType)
-        {
-            return r_FuelType == i_FuelType;
-        }
-
     }
 }

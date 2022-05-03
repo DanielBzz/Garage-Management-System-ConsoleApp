@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ex03GarageLogic
+namespace Ex03.GarageLogic
 {
     internal class Client
     {

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ex03GarageLogic
+namespace Ex03.GarageLogic
 {
-    public class ElectricEngine : Vehicle
+    public class ElectricEngine : Engine
     {
-        readonly float r_MaxBatteryLife;     //In hours
-        float m_CurrentBattery;     //In hours
+        private readonly float r_MaxBatteryLife;
+        private float m_CurrentBattery;
 
-        public ElectricEngine(string i_Model, string i_ID, int i_NumOfTyres, float i_MaxBattery)
-            : base(i_Model, i_ID, i_NumOfTyres)
+        public ElectricEngine(float i_MaxBattery)
         {
             r_MaxBatteryLife = i_MaxBattery;
             m_CurrentBattery = 0;

@@ -1,4 +1,4 @@
-﻿namespace Ex03GarageLogic
+﻿namespace Ex03.GarageLogic
 {
     public enum eServiceStatus
     {

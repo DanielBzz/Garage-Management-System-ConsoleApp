@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ex03GarageLogic
+namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-        private readonly string m_Model;    // maybe do all members protected and give up on properties
-        private readonly string m_ID;
-        private float m_CurrentEnergyPrecentage;        // make enum maybe of fullTank = 100 , EmptyTank = 0.
-        private List<Tyre> m_Tyres = null;
-        private Engine m_Engine;
+        private readonly string r_Model;    // maybe do all members protected and give up on properties
+        private readonly string r_ID;
+        private readonly Engine r_Engine;
+        private readonly List<Tyre> m_Tyres = new List<Tyre>();
 
-        public override string ToString()
+        public Vehicle(string i_Model, string i_ID, int i_NumOfTyres, Engine i_Engine)
         {
-            return base.ToString();
-        }
-
-        public Vehicle(string i_Model, string i_ID, int i_NumOfTyres)
-        {
-            m_Model = i_Model;
-            m_ID = i_ID;
-            m_CurrentEnergyPrecentage = 0;
-
+            r_Model = i_Model;
+            r_ID = i_ID;
+            r_Engine = i_Engine;
             for (int i = 0; i < i_NumOfTyres; i++)
             {
                 m_Tyres.Add(new Tyre());
@@ -32,7 +25,7 @@ namespace Ex03GarageLogic
         {
             get
             {
-                return m_ID;
+                return r_ID;
             }
         }
 
@@ -40,63 +33,24 @@ namespace Ex03GarageLogic
         {
             get
             {
-                return m_Model;
+                return r_Model;
             }
         }
 
-        public float EnergyPrecentage
+        public Engine Engine
         {
             get
             {
-                return m_CurrentEnergyPrecentage;
-            }
-
-            set
-            {
-                m_CurrentEnergyPrecentage = value;
+                return r_Engine;
             }
         }
 
-        private class Tyre
+        public override string ToString()
         {
-            private readonly float r_MaxAirPressure;
-            private float m_CurrentAirPressure;
-            private string m_Manufacturer;
-
-            public float MaxAirPressure
-            {
-                get
-                {
-                    return r_MaxAirPressure;
-                }
-            }
-
-            public float CurrentAirPressure
-            {
-                get
-                {
-                    return m_CurrentAirPressure;
-                }
-            }
-
-            public void Inflate(float i_NewPressure)
-            {
-                bool overTheLimit = (m_CurrentAirPressure + i_NewPressure) >= r_MaxAirPressure;
-
-                if (!overTheLimit)
-                {
-                    m_CurrentAirPressure += i_NewPressure;
-                }
-                else
-                {
-                   // throw some exception that over the limit ...
-                }
-            }
+            return base.ToString();
         }
 
-       // public abstract void AddEnergy(float i_AmountToAdd, eFuelType i_FuelType);
-
-        public void InflateTyresToMax()// maybe to do this actino in garage he should know tyres .
+        public void InflateTyresToMax()
         {
             foreach (Tyre tyre in m_Tyres)
             {
@@ -104,6 +58,6 @@ namespace Ex03GarageLogic
             }
         }
 
-        //public abstract string ToString();      // not sure if it needed , any case we should have override ToString() in every vehicle
+        // public abstract void AddEnergy(float i_AmountToAdd, eFuelType i_FuelType);
     }
 }

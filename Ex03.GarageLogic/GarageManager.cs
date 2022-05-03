@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Ex03GarageLogic
+namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        Dictionary<string, Client> m_CurrentClients = new Dictionary<string, Client>();
+        private Dictionary<string, Client> m_CurrentClients = new Dictionary<string, Client>();
 
         public void AddNewClient(string i_Name, string i_PhoneNumber, Vehicle i_Vehicle)// or AddNewVehicle . first method in file
         {
@@ -68,13 +68,14 @@ namespace Ex03GarageLogic
                 // throw exception
             }
 
-            GasEngine vehicle = vehicleOwner.ClientVehicle as GasEngine;
-            if (vehicle == null)
+            GasEngine engineToRefuel = vehicleOwner.ClientVehicle.Engine as GasEngine;
+
+            if (engineToRefuel == null)
             {
                 // throw exception not on gas
             }
 
-            vehicle.Refuel(i_AmountToAdd, i_FuelType);
+            engineToRefuel.Refuel(i_AmountToAdd, i_FuelType);
         }
 
         public void ChargeVehicle(string i_VehicleId, float i_AmountToAdd)  // sixth method in file
@@ -86,18 +87,26 @@ namespace Ex03GarageLogic
                 // throw exception
             }
 
-            ElectricEngine vehicle = vehicleOwner.ClientVehicle as ElectricEngine;
-            if (vehicle == null)
+            ElectricEngine engineToCharge = vehicleOwner.ClientVehicle.Engine as ElectricEngine;
+
+            if (engineToCharge == null)
             {
                 // throw exception not electric
             }
 
-            vehicle.Charge(i_AmountToAdd);
+            engineToCharge.Charge(i_AmountToAdd);
         }
 
-        public string GetClientDetails(string i_VehicleId)      // seventh method in file
+        public string GetVehicleDetails(string i_VehicleId) // seventh method in file
         {
-            return null;// string format that includes all the details
+            Client client;
+
+            if (!isVehicleInGarage(i_VehicleId, out client))
+            {
+                // throw exception
+            }
+
+            return client.ToString();
         }
 
         private bool isVehicleInGarage(string i_VehicleId, out Client o_VehicleOwner)
