@@ -17,11 +17,11 @@ namespace Ex03GarageLogic
         {
             if (i_EnergySource == eEnergySource.Fuel)
             {
-                m_Vehicle = new GasVehicle(i_Model, i_ID, k_NumOfWheels, i_FuelType);
+                m_Vehicle = new GasEngine(i_Model, i_ID, k_NumOfWheels, i_FuelType);
             }
             else // (i_EnergySource == eEnergySource.Electric)
             {
-                m_Vehicle = new ElectricVehicle(i_Model, i_ID, k_NumOfWheels);
+                m_Vehicle = new ElectricEngine(i_Model, i_ID, k_NumOfWheels);
                 //
             }
 
