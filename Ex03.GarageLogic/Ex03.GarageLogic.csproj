@@ -31,5 +31,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Car.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="eBikeLicenceType.cs" />
+    <Compile Include="eCarColor.cs" />
+    <Compile Include="eCarNumOfDoors.cs" />
+    <Compile Include="eEnergySource.cs" />
+    <Compile Include="eFuelType.cs" />
+    <Compile Include="ElectricEngine.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="eServiceStatus.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="GarageManager.cs" />
+    <Compile Include="GasEngine.cs" />
+    <Compile Include="Motorbike.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Truck.cs" />
+    <Compile Include="ValueOutOfRangeException.cs" />
+    <Compile Include="Vehicle.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
