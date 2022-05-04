@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Ex03.GarageLogic
 {
@@ -18,7 +19,7 @@ namespace Ex03.GarageLogic
             else
             {
                 newClient.Status = eServiceStatus.InRepair;
-                // throw some message that the vehicle is already in the garage
+                throw new ArgumentException("Vehicle is already in the garage");
             }
         }
 
@@ -41,7 +42,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                // throw exception not in garage
+                throw new ArgumentException("Vehicle is not in the garage");
             }
         }
 
@@ -55,24 +56,24 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                // throw exception not in garage
+                throw new ArgumentException("Vehicle is not in the garage");
             }
         }
 
-        public void RefuelVehicle(string i_VehicleId, eFuelType i_FuelType, float i_AmountToAdd)   // fifth method in file 
+        public void RefuelVehicle(string i_VehicleId, eFuelType i_FuelType, float i_AmountToAdd)   // fifth method in file
         {
             Client vehicleOwner;
 
             if (!isVehicleInGarage(i_VehicleId, out vehicleOwner))
             {
-                // throw exception
+                throw new ArgumentException("Vehicle is not in the garage");
             }
 
             GasEngine engineToRefuel = vehicleOwner.ClientVehicle.Engine as GasEngine;
 
             if (engineToRefuel == null)
             {
-                // throw exception not on gas
+                throw new FormatException("Vehicle is not gas vehicle");
             }
 
             engineToRefuel.Refuel(i_AmountToAdd, i_FuelType);
@@ -84,14 +85,14 @@ namespace Ex03.GarageLogic
 
             if (!isVehicleInGarage(i_VehicleId, out vehicleOwner))
             {
-                // throw exception
+                throw new ArgumentException("Vehicle is not in the garage");
             }
 
             ElectricEngine engineToCharge = vehicleOwner.ClientVehicle.Engine as ElectricEngine;
 
             if (engineToCharge == null)
             {
-                // throw exception not electric
+                throw new FormatException("Vehicle is not electric vehicle");
             }
 
             engineToCharge.Charge(i_AmountToAdd);
@@ -103,7 +104,7 @@ namespace Ex03.GarageLogic
 
             if (!isVehicleInGarage(i_VehicleId, out client))
             {
-                // throw exception
+                throw new ArgumentException("Vehicle is not in the garage");
             }
 
             return client.ToString();

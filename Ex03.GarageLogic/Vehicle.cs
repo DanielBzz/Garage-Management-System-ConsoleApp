@@ -5,27 +5,36 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-        private readonly string r_Model;    // maybe do all members protected and give up on properties
-        private readonly string r_ID;
-        private readonly Engine r_Engine;
-        private readonly List<Tyre> m_Tyres = new List<Tyre>();
+        private string m_Model;    // maybe do all members protected and give up on properties
+        private string m_ID;
+        private Engine m_Engine;
+        private List<Tyre> m_Tyres;
 
-        public Vehicle(string i_Model, string i_ID, int i_NumOfTyres, Engine i_Engine)
+        public Vehicle(int i_NumOfTyres)
         {
-            r_Model = i_Model;
-            r_ID = i_ID;
-            r_Engine = i_Engine;
-            for (int i = 0; i < i_NumOfTyres; i++)
-            {
-                m_Tyres.Add(new Tyre());
-            }
+            m_Tyres = new List<Tyre>(i_NumOfTyres);
         }
 
         public string ID
         {
             get
             {
-                return r_ID;
+                return m_ID;
+            }
+
+            set
+            {
+                if (m_ID == null)
+                {
+                    if (isValidName(value))
+                    {
+                        m_ID = value;
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Vehicle already has ID");
+                }
             }
         }
 
@@ -33,7 +42,22 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return r_Model;
+                return m_Model;
+            }
+
+            set
+            {
+                if (m_Model == null)
+                {
+                    if (isValidName(value))
+                    {
+                       m_Model = value;
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Vehicle already has a model");
+                }
             }
         }
 
@@ -41,7 +65,27 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return r_Engine;
+                return m_Engine;
+            }
+
+            set
+            {
+                if (m_Engine == null)
+                {
+                    m_Engine = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Vehicle already has a Engine");
+                }
+            }
+        }
+
+        public List<Tyre> Tyres
+        {
+            get
+            {
+                return m_Tyres;
             }
         }
 
@@ -50,7 +94,7 @@ namespace Ex03.GarageLogic
             string vehicleInfo = string.Format(@"Vehicle model: {0}
 Vehicle Plate Number: {1}
 {2}
-{3}", r_Model, r_ID, m_Tyres[0].ToString(), r_Engine.ToString());
+{3}", m_Model, m_ID, m_Tyres[0].ToString(), m_Engine.ToString());
 
             return vehicleInfo;
         }
@@ -63,6 +107,16 @@ Vehicle Plate Number: {1}
             }
         }
 
-        // public abstract void AddEnergy(float i_AmountToAdd, eFuelType i_FuelType);
+        private bool isValidName(string i_Value)
+        {
+            bool validName = i_Value != null;
+
+            if (!validName)
+            {
+                throw new FormatException("Not a valid value");
+            }
+
+            return validName;
+        }
     }
 }
