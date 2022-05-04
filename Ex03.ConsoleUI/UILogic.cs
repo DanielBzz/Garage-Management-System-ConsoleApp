@@ -51,18 +51,30 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(Messenger.GoodByeMsg());
         }
 
-        public static void GetMenuInput(out int i_UserInput, int i_MinValue, int i_MaxValue)
+        public static void GetMenuInput(out int o_UserInput, int i_MinValue, int i_MaxValue)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());
             
-            while (int.TryParse(input.ToString(), out i_UserInput) && i_UserInput >= i_MinValue && i_UserInput <= i_MaxValue)
+            while (int.TryParse(input.ToString(), out o_UserInput) && o_UserInput >= i_MinValue && o_UserInput <= i_MaxValue)
             {
-                Console.Clear();
                 Console.WriteLine(Messenger.WrongInputMsg());
-                Console.WriteLine(Messenger.WelcomeMsg());
                 input.Clear();
                 input.AppendLine(Console.ReadLine());
             }
+        }
+
+        public static void GetLicensePlateString(out string o_UserInput)
+        {
+            StringBuilder input = new StringBuilder(Console.ReadLine());
+
+            while (input == null)
+            {
+                Console.WriteLine(Messenger.WrongInputMsg());
+                input.Clear();
+                input.AppendLine(Console.ReadLine());
+            }
+
+            o_UserInput = input.ToString();
         }
     }
 }

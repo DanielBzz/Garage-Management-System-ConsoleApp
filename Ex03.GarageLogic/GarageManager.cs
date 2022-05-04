@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
         {
             Client newClient;
 
-            if (!isVehicleInGarage(i_Vehicle.ID, out newClient))
+            if (!m_CurrentClients.TryGetValue(i_Vehicle.ID, out newClient))
             {
                 newClient = new Client(i_Name, i_PhoneNumber, i_Vehicle);
                 m_CurrentClients.Add(i_Vehicle.ID, newClient);
@@ -42,27 +42,19 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            if (isVehicleInGarage(i_VehicleId, out vehicleOwner))
+            if (checkIfVehicleInGarage(i_VehicleId, out vehicleOwner))
             {
                 vehicleOwner.Status = i_NewStatus;
             }
-            else
-            {
-                throw new ArgumentException("Vehicle is not in the garage");
-            }
         }
 
-        public void InflateTyresToMax(string i_VehicleId, eServiceStatus i_NewStatus) // forth method in file
+        public void InflateTyresToMax(string i_VehicleId) // forth method in file
         {
             Client vehicleOwner;
 
-            if (isVehicleInGarage(i_VehicleId, out vehicleOwner))
+            if (checkIfVehicleInGarage(i_VehicleId, out vehicleOwner))
             {
                 vehicleOwner.ClientVehicle.InflateTyresToMax();
-            }
-            else
-            {
-                throw new ArgumentException("Vehicle is not in the garage");
             }
         }
 
@@ -70,11 +62,7 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            if (!isVehicleInGarage(i_VehicleId, out vehicleOwner))
-            {
-                throw new ArgumentException("Vehicle is not in the garage");
-            }
-
+            checkIfVehicleInGarage(i_VehicleId, out vehicleOwner);
             GasEngine engineToRefuel = vehicleOwner.ClientVehicle.Engine as GasEngine;
 
             if (engineToRefuel == null)
@@ -89,11 +77,7 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            if (!isVehicleInGarage(i_VehicleId, out vehicleOwner))
-            {
-                throw new ArgumentException("Vehicle is not in the garage");
-            }
-
+            checkIfVehicleInGarage(i_VehicleId, out vehicleOwner);
             ElectricEngine engineToCharge = vehicleOwner.ClientVehicle.Engine as ElectricEngine;
 
             if (engineToCharge == null)
@@ -108,17 +92,21 @@ namespace Ex03.GarageLogic
         {
             Client client;
 
-            if (!isVehicleInGarage(i_VehicleId, out client))
-            {
-                throw new ArgumentException("Vehicle is not in the garage");
-            }
+            checkIfVehicleInGarage(i_VehicleId, out client);
 
             return client.ToString();
         }
 
-        private bool isVehicleInGarage(string i_VehicleId, out Client o_VehicleOwner)
+        private bool checkIfVehicleInGarage(string i_VehicleId, out Client o_VehicleOwner)
         {
-            return m_CurrentClients.TryGetValue(i_VehicleId, out o_VehicleOwner);
+            bool vehicleFound = m_CurrentClients.TryGetValue(i_VehicleId, out o_VehicleOwner);
+
+            if (!vehicleFound)
+            {
+                throw new ArgumentException("Vehicle is not in the garage");
+            }
+
+            return vehicleFound
         }
     }
 }

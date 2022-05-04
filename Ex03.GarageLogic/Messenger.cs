@@ -56,5 +56,13 @@ Choose a method from the list below :
 4.  Without filter");
         }
 
+        public static string SelectFuelTypeMsg()
+        {
+            return string.Format(@"Select fuel type you want to refuel with:
+1.  Soler
+2.  Octan95
+3.  Octan96
+4.  Octan98");
+        }
     }
 }

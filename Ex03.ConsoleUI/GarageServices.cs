@@ -48,17 +48,62 @@ namespace Ex03.ConsoleUI
 
         public void ChangeVehicleStatus()
         {
+            int userNewStatusInput;
+            string licensePlateNumber;
 
-        }
+            Console.WriteLine(Messenger.EnterPlateNumberMsg());
+            UILogic.GetLicensePlateString(out licensePlateNumber);
+            Console.WriteLine(Messenger.ChangeVehicleStatusMsg());
+            UILogic.GetMenuInput(out userNewStatusInput, 1, 3);
+            try
+            {
+                r_GarageManager.SetNewStatusForVehicle(licensePlateNumber, (eServiceStatus)userNewStatusInput);
+            }
+            catch(ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+}
 
         public void InflateTyreToMax()
         {
+            string licensePlateNumber;
 
+            Console.WriteLine(Messenger.EnterPlateNumberMsg());
+            UILogic.GetLicensePlateString(out licensePlateNumber);
+            try
+            {
+                r_GarageManager.InflateTyresToMax(licensePlateNumber);
+            }
+            catch(ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void Refuel()
         {
+            string licensePlateNumber;
+            int userFuelTypeInput, amountToAdd;
 
+            Console.WriteLine(Messenger.EnterPlateNumberMsg());
+            UILogic.GetLicensePlateString(out licensePlateNumber);
+            Console.WriteLine(Messenger.SelectFuelTypeMsg());
+            ///ask amount to add msg 
+            ///try parse it to int and send it to refuel
+            UILogic.GetMenuInput(out userFuelTypeInput, 1, 4);
+            try
+            {
+                r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput );
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (ValueOutOfRangeException ex)
+            { 
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void Recharge()
