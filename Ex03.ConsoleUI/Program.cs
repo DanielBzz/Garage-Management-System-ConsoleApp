@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
@@ -12,15 +11,11 @@ namespace Ex03.ConsoleUI
         {
             try
             {
-                inflate();
+                Ex03.ConsoleUI.Run();
             }
-            catch (ValueOutOfRangeException vore)
+            catch (Exception ex)
             {
-                Console.WriteLine("Overloading");
-            }
-            catch(Exception ex)
-            {
-                //handle general case
+                Console.WriteLine(ex.Message);
             }
         }
     }

@@ -6,7 +6,7 @@ namespace Ex03.GarageLogic
     {
         private float m_MaxValue;
         private float m_MinValue;
-
+        
         public float MaxValue
         {
             get

@@ -70,7 +70,7 @@ namespace Ex03.GarageLogic
 
             if (isValidAirPressure(newAirPressure))
             {
-                m_CurrentAirPressure += i_AddPressureValue;
+                m_CurrentAirPressure += i_NewPressure;
             }
         }
 
