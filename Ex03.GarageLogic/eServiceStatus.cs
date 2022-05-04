@@ -2,8 +2,9 @@
 {
     public enum eServiceStatus
     {
-        InRepair,
+        InRepair = 1,
         Fixed,
         Paid,
+        NoStatus,
     }
 }

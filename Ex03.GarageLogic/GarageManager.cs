@@ -23,13 +23,19 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string[] ShowAllVehiclesInGarage() // second method in file , return all vehicle's id //finish
+        public List<string> ShowAllVehiclesInGarage(eServiceStatus i_FilterStatus) // second method in file , return all vehicle's id //finish
         {
-            string[] res = new string[m_CurrentClients.Count];
+            List<string> vehiclesList = new List<string>(m_CurrentClients.Count);
 
-            m_CurrentClients.Keys.CopyTo(res, 0);
+            foreach (string licensePlate in m_CurrentClients.Keys)
+            {
+                if (i_FilterStatus == eServiceStatus.NoStatus || m_CurrentClients[licensePlate].Status == i_FilterStatus)
+                {
+                    vehiclesList.Add(licensePlate);
+                }
+            }
 
-            return res;
+            return vehiclesList;
         }
 
         public void SetNewStatusForVehicle(string i_VehicleId, eServiceStatus i_NewStatus) // third method in file

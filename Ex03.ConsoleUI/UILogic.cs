@@ -8,8 +8,6 @@ namespace Ex03.ConsoleUI
 {
     public class UILogic
     {
-        private GarageManager m_GarageManager = new GarageManager();
-
         public void Run()
         {
             int userInput;
@@ -17,7 +15,7 @@ namespace Ex03.ConsoleUI
             do
             {
                 Console.WriteLine(Messenger.WelcomeMsg());
-                GetRunInput(out userInput);
+                GetMenuInput(out userInput, 1, 8);
 
                 switch (userInput)
                 {
@@ -53,51 +51,11 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(Messenger.GoodByeMsg());
         }
 
-        public void EnterNewVehicle()
-        {
-
-            while (!invalid)
-            try
-            {
-                m_GarageManager.AddNewClient()
-            }
-        }
-
-        public void ShowVehicleList()
-        {
-
-        }
-
-        public void ChangeVehicleStatus()
-        {
-
-        }
-
-        public void InflateTyreToMax()
-        {
-
-        }
-
-        public void Refuel()
-        {
-
-        }
-
-        public void Recharge()
-        {
-
-        }
-
-        public void ShowVehicleFullData()
-        {
-
-        }
-
-        private void GetRunInput(out int i_UserInput)
+        public static void GetMenuInput(out int i_UserInput, int i_MinValue, int i_MaxValue)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());
             
-            while (int.TryParse(input.ToString(), out i_UserInput) && i_UserInput > 0 && i_UserInput < 9)
+            while (int.TryParse(input.ToString(), out i_UserInput) && i_UserInput >= i_MinValue && i_UserInput <= i_MaxValue)
             {
                 Console.Clear();
                 Console.WriteLine(Messenger.WrongInputMsg());

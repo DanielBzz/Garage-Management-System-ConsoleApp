@@ -46,5 +46,15 @@ Choose a method from the list below :
         {
             return "Wrong input, please try again.";
         }
+
+        public static string FilterByStatusMsg()
+        {
+            return string.Format(@"Select one of the following filter:
+1.  In repair
+2.  Fixed
+3.  Paid
+4.  Without filter");
+        }
+
     }
 }
