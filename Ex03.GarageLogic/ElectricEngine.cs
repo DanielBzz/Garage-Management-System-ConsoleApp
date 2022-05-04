@@ -14,12 +14,10 @@ namespace Ex03.GarageLogic
 
         public void Charge(float i_AmountToAdd)
         {
-            if (overTheMaxCapacity(i_AmountToAdd))
+            if (!IsValidNewCapacity(i_AmountToAdd))
             {
-                throw new ValueOutOfRangeException(r_MaxEnergyCapacity, 0, m_CurrentEnergyCapacity + i_AmountToAdd);
+                m_CurrentEnergyCapacity += i_AmountToAdd;
             }
-
-            m_CurrentEnergyCapacity += i_AmountToAdd;
         }
 
         public override string ToString()

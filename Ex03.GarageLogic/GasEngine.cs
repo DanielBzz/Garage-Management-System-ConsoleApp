@@ -22,12 +22,10 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Not match fuel type, please select {0} ", r_FuelType.GetType().Name);  // probably the name of the class and not the specific enum
             }
 
-            if (overTheMaxCapacity(i_AmountToAdd))
+            if (!IsValidNewCapacity(i_AmountToAdd))
             {
-                throw new ValueOutOfRangeException(r_MaxEnergyCapacity, 0, m_CurrentEnergyCapacity + i_AmountToAdd);
+                m_CurrentEnergyCapacity += i_AmountToAdd;
             }
-
-            m_CurrentEnergyCapacity += i_AmountToAdd;
         }
 
         public override string ToString()

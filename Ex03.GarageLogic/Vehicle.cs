@@ -10,10 +10,10 @@ namespace Ex03.GarageLogic
         private Engine m_Engine;
         private List<Tyre> m_Tyres;
 
-        public Vehicle(int i_NumOfTyres)
-        {
-            m_Tyres = new List<Tyre>(i_NumOfTyres);
-        }
+        //public Vehicle(int i_NumOfTyres)
+        //{
+        //    m_Tyres = new List<Tyre>(i_NumOfTyres);
+        //}
 
         public string ID
         {

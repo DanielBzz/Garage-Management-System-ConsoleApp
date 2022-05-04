@@ -19,11 +19,16 @@ namespace Ex03.GarageLogic
             {
                 if (!m_MaxAirPressure.HasValue)
                 {
+                    if (value < 0)
+                    {
+                          throw new FormatException("Not a valid value");
+                    }
 
+                    m_MaxAirPressure = value;
                 }
                 else
                 {
-                    throw new ArgumentException("Tyre already has max air pressure");
+                    throw new ArgumentException("Tyre already has maximum air pressure");
                 }
             }
         }
@@ -70,7 +75,7 @@ namespace Ex03.GarageLogic
 
             if (isValidAirPressure(newAirPressure))
             {
-                m_CurrentAirPressure += i_NewPressure;
+                m_CurrentAirPressure += i_AddPressureValue;
             }
         }
 

@@ -13,7 +13,22 @@ namespace Ex03.GarageLogic
         public Engine(float i_MaxCapacity)
         {
             r_MaxEnergyCapacity = i_MaxCapacity;
-            m_CurrentEnergyCapacity = 0;
+        }
+
+        public float CurrentEnergyCapacity
+        {
+            get
+            {
+                return m_CurrentEnergyCapacity;
+            }
+
+            set
+            {
+                if (!IsValidNewCapacity(value - CurrentEnergyCapacity))
+                {
+                    m_CurrentEnergyCapacity = value;
+                }
+            }
         }
 
         public float EnergyPrecentage
@@ -29,9 +44,17 @@ namespace Ex03.GarageLogic
             return string.Format(@"{0}% energy left", EnergyPrecentage);
         }
 
-        protected bool overTheMaxCapacity(float i_AmountToAdd)
+        protected bool IsValidNewCapacity(float i_AmountToAdd)
         {
-            return r_MaxEnergyCapacity >= m_CurrentEnergyCapacity + i_AmountToAdd;
+            float newCapacity = m_CurrentEnergyCapacity + i_AmountToAdd;
+            bool overTheMax = r_MaxEnergyCapacity < newCapacity || newCapacity < 0;
+
+            if (overTheMax)
+            {
+                throw new ValueOutOfRangeException(r_MaxEnergyCapacity, 0, newCapacity);
+            }
+
+            return overTheMax;
         }
     }
 }

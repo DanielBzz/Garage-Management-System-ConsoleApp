@@ -11,12 +11,12 @@ namespace Ex03.GarageLogic
         private readonly eCarNumOfDoors r_NumOfDoors;
         private eCarColor m_Color;
 
-        public Car(string i_Model, string i_ID, Engine i_Engine, eCarColor i_CarColor, eCarNumOfDoors i_NumOfDoors)
-            : base(i_Model, i_ID, k_NumOfWheels, i_Engine)
-        {
-            m_Color = i_CarColor;
-            r_NumOfDoors = i_NumOfDoors;
-        }
+        //public Car(string i_Model, string i_ID, Engine i_Engine, eCarColor i_CarColor, eCarNumOfDoors i_NumOfDoors)
+        //    : base(i_Model, i_ID, k_NumOfWheels, i_Engine)
+        //{
+        //    m_Color = i_CarColor;
+        //    r_NumOfDoors = i_NumOfDoors;
+        //}
 
         public override string ToString()
         {

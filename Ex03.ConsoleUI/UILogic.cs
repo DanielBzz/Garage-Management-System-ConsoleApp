@@ -95,17 +95,16 @@ namespace Ex03.ConsoleUI
 
         private void GetRunInput(out int i_UserInput)
         {
-            string input;
+            StringBuilder input = new StringBuilder(Console.ReadLine());
             
-            input = Console.ReadLine();
-            while (int.TryParse(input, out i_UserInput) && i_UserInput > 0 && i_UserInput < 9)
+            while (int.TryParse(input.ToString(), out i_UserInput) && i_UserInput > 0 && i_UserInput < 9)
             {
                 Console.Clear();
                 Console.WriteLine(Messenger.WrongInputMsg());
                 Console.WriteLine(Messenger.WelcomeMsg());
-                input = Console.ReadLine();
+                input.Clear();
+                input.AppendLine(Console.ReadLine());
             }
         }
-
     }
 }
