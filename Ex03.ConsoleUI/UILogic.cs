@@ -63,6 +63,19 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        public static void GetAmountInput(out int o_UserInput)
+        {
+            StringBuilder input = new StringBuilder(Console.ReadLine());
+
+            while (int.TryParse(input.ToString(), out o_UserInput))
+            {
+                Console.WriteLine(Messenger.WrongInputMsg());
+                input.Clear();
+                input.AppendLine(Console.ReadLine());
+            }
+        }
+
+
         public static void GetLicensePlateString(out string o_UserInput)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());

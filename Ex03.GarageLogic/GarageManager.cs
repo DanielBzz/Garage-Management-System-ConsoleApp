@@ -106,7 +106,7 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Vehicle is not in the garage");
             }
 
-            return vehicleFound
+            return vehicleFound;
         }
     }
 }

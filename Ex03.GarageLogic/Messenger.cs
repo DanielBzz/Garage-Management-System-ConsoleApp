@@ -64,5 +64,10 @@ Choose a method from the list below :
 3.  Octan96
 4.  Octan98");
         }
+
+        public static string SelectEnergyAmountToAddMsg()
+        {
+            return "Please select amount of energy you want to add:";
+        }
     }
 }

@@ -3,8 +3,7 @@ using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
-
-    class VehicleFactory
+    public class VehicleFactory
     {
         private List<Vehicle> m_VehiclesList;
 

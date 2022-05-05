@@ -89,12 +89,12 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetLicensePlateString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectFuelTypeMsg());
-            ///ask amount to add msg 
-            ///try parse it to int and send it to refuel
             UILogic.GetMenuInput(out userFuelTypeInput, 1, 4);
+            Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
+            UILogic.GetAmountInput(out amountToAdd);
             try
             {
-                r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput );
+                r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput, amountToAdd);
             }
             catch (ArgumentException ex)
             {
@@ -108,12 +108,41 @@ namespace Ex03.ConsoleUI
 
         public void Recharge()
         {
+            string licensePlateNumber;
+            int amountToAdd;
 
+            Console.WriteLine(Messenger.EnterPlateNumberMsg());
+            UILogic.GetLicensePlateString(out licensePlateNumber);
+            Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
+            UILogic.GetAmountInput(out amountToAdd);
+            try
+            {
+                r_GarageManager.ChargeVehicle(licensePlateNumber, amountToAdd);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (ValueOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void ShowVehicleFullData()
         {
+            string licensePlateNumber;
 
+            Console.WriteLine(Messenger.EnterPlateNumberMsg());
+            UILogic.GetLicensePlateString(out licensePlateNumber);
+            try
+            {
+                r_GarageManager.GetVehicleDetails(licensePlateNumber);
+            }
+            catch(ArgumentException ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
