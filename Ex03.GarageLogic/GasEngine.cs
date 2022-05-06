@@ -30,7 +30,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string engineInfo = string.Format(@"Engine powered by : Fuel
+            string engineInfo = string.Format(@"Motor powered by : Gas
 Fuel type : {0}
 {1}", r_FuelType, base.ToString());
 

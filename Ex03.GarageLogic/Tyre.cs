@@ -8,6 +8,11 @@ namespace Ex03.GarageLogic
         private float m_CurrentAirPressure;
         private string m_Manufacturer;
 
+        public Tyre (float i_MaxAirPressure)
+        {
+            m_MaxAirPressure = i_MaxAirPressure;
+        }
+
         public float MaxAirPressure
         {
             get
@@ -21,14 +26,14 @@ namespace Ex03.GarageLogic
                 {
                     if (value < 0)
                     {
-                          throw new FormatException("Not a valid value");
+                          throw new FormatException("Not a valid air pressure");
                     }
 
                     m_MaxAirPressure = value;
                 }
                 else
                 {
-                    throw new ArgumentException("Tyre already has maximum air pressure");
+                    throw new ArgumentException("Tyre at its max air pressure");
                 }
             }
         }
@@ -81,9 +86,9 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string tyreInfo = string.Format(@"Tyre manufacturer: {0}.
-Tyre max air pressure: {1}.
-Tyre current air pressure: {2}.", m_Manufacturer, m_MaxAirPressure, m_CurrentAirPressure);
+            string tyreInfo = string.Format(@"Tyre manufacturer: {0}
+Tyre max air pressure: {1}
+Tyre current air pressure: {2}", m_Manufacturer, m_MaxAirPressure, m_CurrentAirPressure);
 
             return tyreInfo;
         }

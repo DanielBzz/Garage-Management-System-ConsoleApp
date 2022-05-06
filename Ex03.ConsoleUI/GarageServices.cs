@@ -9,16 +9,31 @@ namespace Ex03.ConsoleUI
     class GarageServices
     {
         private readonly GarageManager r_GarageManager = new GarageManager();
+        private readonly VehicleFactory r_VehicleFactory = new VehicleFactory();
 
         public void EnterNewVehicle()
         {
-            // print menu of all the vehicle option in the garage ,, we should hold a list of all the vehicles in the factory;
+            int userInput;
+            Vehicle newVehicle;
 
-            while (!invalid)
-                try
-                {
-                    r_GarageManager.AddNewClient()
-                }
+            Console.WriteLine(Messenger.SelectVehicleMsg());
+            Console.WriteLine(r_VehicleFactory.VehicleListToString());
+            UILogic.GetUserSelection(out userInput, 1, r_VehicleFactory.VehiclesList.Count);
+            try
+            {
+                newVehicle = r_VehicleFactory.BuildVehicleByIndex(userInput);
+                addNewClient(newVehicle);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void addNewClient(Vehicle i_NewVehicle)
+        {
+            //test
+            r_GarageManager.AddNewClient("sagi", "0526431030", i_NewVehicle);
         }
 
         public void ShowVehicleList()
@@ -26,7 +41,7 @@ namespace Ex03.ConsoleUI
             int userInput;
             
             Console.WriteLine(Messenger.FilterByStatusMsg());
-            UILogic.GetMenuInput(out userInput, 1, 4);
+            UILogic.GetUserSelection(out userInput, 1, 4);
             eServiceStatus filterBy = (eServiceStatus)userInput;
 
             List<string> vehiclesList = r_GarageManager.ShowAllVehiclesInGarage(filterBy);
@@ -41,7 +56,7 @@ namespace Ex03.ConsoleUI
 
             if (count == 0) 
             {
-                Console.WriteLine("There is no vehicles {0}", filterBy != eServiceStatus.NoStatus ? 
+                Console.WriteLine("There are no vehicles {0}", filterBy != eServiceStatus.NoStatus ? 
                                  Enum.GetName(typeof(eServiceStatus), filterBy) : "");
             }
         }
@@ -54,7 +69,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetLicensePlateString(out licensePlateNumber);
             Console.WriteLine(Messenger.ChangeVehicleStatusMsg());
-            UILogic.GetMenuInput(out userNewStatusInput, 1, 3);
+            UILogic.GetUserSelection(out userNewStatusInput, 1, 3);
             try
             {
                 r_GarageManager.SetNewStatusForVehicle(licensePlateNumber, (eServiceStatus)userNewStatusInput);
@@ -89,9 +104,9 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetLicensePlateString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectFuelTypeMsg());
-            UILogic.GetMenuInput(out userFuelTypeInput, 1, 4);
+            UILogic.GetUserSelection(out userFuelTypeInput, 1, 4);
             Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
-            UILogic.GetAmountInput(out amountToAdd);
+            UILogic.GetEnergyAmount(out amountToAdd);
             try
             {
                 r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput, amountToAdd);
@@ -114,7 +129,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetLicensePlateString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
-            UILogic.GetAmountInput(out amountToAdd);
+            UILogic.GetEnergyAmount(out amountToAdd);
             try
             {
                 r_GarageManager.ChargeVehicle(licensePlateNumber, amountToAdd);

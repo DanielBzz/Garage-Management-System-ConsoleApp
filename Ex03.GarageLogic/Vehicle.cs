@@ -5,15 +5,20 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-        private string m_Model;    // maybe do all members protected and give up on properties
+        private string m_Model; 
         private string m_ID;
         private Engine m_Engine;
         private List<Tyre> m_Tyres;
 
-        //public Vehicle(int i_NumOfTyres)
-        //{
-        //    m_Tyres = new List<Tyre>(i_NumOfTyres);
-        //}
+        public Vehicle(int i_NumOfWheels, float i_MaxAirPressure, Engine i_Engine)
+        {
+            m_Engine = i_Engine;
+            m_Tyres = new List<Tyre>(i_NumOfWheels);
+            for (int i = 0; i < i_NumOfWheels; i++)
+            {
+                m_Tyres.Add(new Tyre(i_MaxAirPressure));
+            }
+        }
 
         public string ID
         {

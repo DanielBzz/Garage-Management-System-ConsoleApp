@@ -8,6 +8,7 @@ namespace Ex03.ConsoleUI
 {
     public class UILogic
     {
+        private readonly GarageServices r_GarageServices = new GarageServices();
         public void Run()
         {
             int userInput;
@@ -15,55 +16,56 @@ namespace Ex03.ConsoleUI
             do
             {
                 Console.WriteLine(Messenger.WelcomeMsg());
-                GetMenuInput(out userInput, 1, 8);
-
+                GetUserSelection(out userInput, 1, 8);
+                // if every method has try&catch we should initiate try on the switch below and catch afterwards
                 switch (userInput)
                 {
                     case 1:
-                        EnterNewVehicle();
+                        r_GarageServices.EnterNewVehicle();
                         break;
                     case 2:
-                        ShowVehicleList();
+                        r_GarageServices.ShowVehicleList();
                         break;
                     case 3:
-                        ChangeVehicleStatus();
+                        r_GarageServices.ChangeVehicleStatus();
                         break;
                     case 4:
-                        InflateTyreToMax();
+                        r_GarageServices.InflateTyreToMax();
                         break;
                     case 5:
-                        Refuel();
+                        r_GarageServices.Refuel();
                         break;
                     case 6:
-                        Recharge();
+                        r_GarageServices.Recharge();
                         break;
                     case 7:
-                        ShowVehicleFullData();
+                        r_GarageServices.ShowVehicleFullData();
                         break;
                     default:
-                        //
                         break;
                 }
 
+                Console.WriteLine("Please wait");
+                System.Threading.Thread.Sleep(3500);
                 Console.Clear();
             } while (userInput != 8);
 
             Console.WriteLine(Messenger.GoodByeMsg());
         }
 
-        public static void GetMenuInput(out int o_UserInput, int i_MinValue, int i_MaxValue)
+        public static void GetUserSelection(out int o_UserInput, int i_MinValue, int i_MaxValue)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());
             
-            while (int.TryParse(input.ToString(), out o_UserInput) && o_UserInput >= i_MinValue && o_UserInput <= i_MaxValue)
+            while (int.TryParse(input.ToString(), out o_UserInput) == false || o_UserInput < i_MinValue || o_UserInput > i_MaxValue)
             {
                 Console.WriteLine(Messenger.WrongInputMsg());
                 input.Clear();
-                input.AppendLine(Console.ReadLine());
+                input.Append(Console.ReadLine());
             }
         }
 
-        public static void GetAmountInput(out int o_UserInput)
+        public static void GetEnergyAmount(out int o_UserInput)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());
 
@@ -74,7 +76,6 @@ namespace Ex03.ConsoleUI
                 input.AppendLine(Console.ReadLine());
             }
         }
-
 
         public static void GetLicensePlateString(out string o_UserInput)
         {

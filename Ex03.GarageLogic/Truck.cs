@@ -11,12 +11,8 @@ namespace Ex03.GarageLogic
         private bool m_IsRefrigeratedContents;
         private float m_CargoVolume;
 
-        //public Truck(string i_Model, string i_ID, Engine i_Engine, bool i_IsRefrigeratedContents, float i_CargoVolume)
-        //            : base(i_Model, i_ID, k_NumOfWheels, i_Engine)
-        //{
-        //    m_IsRefrigeratedContents = i_IsRefrigeratedContents;
-        //    m_CargoVolume = i_CargoVolume;
-        //}
+        public Truck(int i_NumOfWheels, float i_MaxPressure, Engine i_Engine)
+            : base(i_NumOfWheels, i_MaxPressure, i_Engine) { }
 
         public override string ToString()
         {

@@ -7,16 +7,11 @@ namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
-        private const int k_NumOfWheels = 4;
         private readonly eCarNumOfDoors r_NumOfDoors;
         private eCarColor m_Color;
 
-        //public Car(string i_Model, string i_ID, Engine i_Engine, eCarColor i_CarColor, eCarNumOfDoors i_NumOfDoors)
-        //    : base(i_Model, i_ID, k_NumOfWheels, i_Engine)
-        //{
-        //    m_Color = i_CarColor;
-        //    r_NumOfDoors = i_NumOfDoors;
-        //}
+        public Car(int i_NumOfWheels, float i_MaxPressure, Engine i_Engine)
+            : base(i_NumOfWheels, i_MaxPressure, i_Engine) { }
 
         public override string ToString()
         {

@@ -41,7 +41,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(@"{0}% energy left", EnergyPrecentage);
+            return string.Format(@"{0} % energy left", EnergyPrecentage);
         }
 
         protected bool IsValidNewCapacity(float i_AmountToAdd)

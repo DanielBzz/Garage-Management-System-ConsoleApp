@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ex03.ConsoleUI
 {
@@ -9,9 +6,10 @@ namespace Ex03.ConsoleUI
     {
         public static void Main()
         {
+            UILogic garageApp = new UILogic();
             try
             {
-                Ex03.ConsoleUI.Run();
+                garageApp.Run();
             }
             catch (Exception ex)
             {

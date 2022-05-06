@@ -69,5 +69,10 @@ Choose a method from the list below :
         {
             return "Please select amount of energy you want to add:";
         }
+
+        public static string SelectVehicleMsg()
+        {
+            return "Please select a vehicle from the following list :";
+        }
     }
 }
