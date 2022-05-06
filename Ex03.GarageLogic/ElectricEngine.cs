@@ -25,5 +25,10 @@ namespace Ex03.GarageLogic
 
             return engineInfo;
         }
+
+        public override string ToShow()
+        {
+            return "Motor powered by : Electricity";
+        }
     }
 }

@@ -17,17 +17,28 @@ namespace Ex03.ConsoleUI
             Vehicle newVehicle;
 
             Console.WriteLine(Messenger.SelectVehicleMsg());
-            Console.WriteLine(r_VehicleFactory.VehicleListToString());
+            Console.WriteLine(r_VehicleFactory.VehicleListToShow());
             UILogic.GetUserSelection(out userInput, 1, r_VehicleFactory.VehiclesList.Count);
             try
             {
                 newVehicle = r_VehicleFactory.BuildVehicleByIndex(userInput);
+                AddVehicleID(newVehicle);
                 addNewClient(newVehicle);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void AddVehicleID(Vehicle i_NewVehicle)
+        {
+            string ID;
+            string msg = string.Format(@"Enter {0} plate number", i_NewVehicle.GetType().Name);
+            
+            Console.WriteLine(msg);
+            ID = Console.ReadLine();
+            i_NewVehicle.ID = ID;
         }
 
         private void addNewClient(Vehicle i_NewVehicle)
@@ -152,7 +163,7 @@ namespace Ex03.ConsoleUI
             UILogic.GetLicensePlateString(out licensePlateNumber);
             try
             {
-                r_GarageManager.GetVehicleDetails(licensePlateNumber);
+                Console.WriteLine(r_GarageManager.GetVehicleDetails(licensePlateNumber));
             }
             catch(ArgumentException ex) 
             {

@@ -104,6 +104,12 @@ Vehicle Plate Number: {1}
             return vehicleInfo;
         }
 
+        public virtual string ToShow()
+        {
+            return string.Format(@"{0}
+{1}", m_Tyres[0].ToShow(), m_Engine.ToShow());
+        }
+
         public void InflateTyresToMax()
         {
             foreach (Tyre tyre in m_Tyres)

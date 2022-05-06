@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<string, Client> m_CurrentClients = new Dictionary<string, Client>();
 
-        public void AddNewClient(string i_Name, string i_PhoneNumber, Vehicle i_Vehicle)// or AddNewVehicle . first method in file
+        public void AddNewClient(string i_Name, string i_PhoneNumber, Vehicle i_Vehicle) // First method in file
         {
             Client newClient;
 
@@ -58,7 +58,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void RefuelVehicle(string i_VehicleId, eFuelType i_FuelType, float i_AmountToAdd)   // fifth method in file
+        public void RefuelVehicle(string i_VehicleId, eFuelType i_FuelType, float i_AmountToAdd) // fifth method in file
         {
             Client vehicleOwner;
 
@@ -73,7 +73,7 @@ namespace Ex03.GarageLogic
             engineToRefuel.Refuel(i_AmountToAdd, i_FuelType);
         }
 
-        public void ChargeVehicle(string i_VehicleId, float i_AmountToAdd)  // sixth method in file
+        public void ChargeVehicle(string i_VehicleId, float i_AmountToAdd) // sixth method in file
         {
             Client vehicleOwner;
 

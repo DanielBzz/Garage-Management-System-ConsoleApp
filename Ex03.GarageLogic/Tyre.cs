@@ -93,6 +93,11 @@ Tyre current air pressure: {2}", m_Manufacturer, m_MaxAirPressure, m_CurrentAirP
             return tyreInfo;
         }
 
+        public string ToShow()
+        {
+            return string.Format(@"Tyre max air pressure : {0}", m_MaxAirPressure);
+        }
+
         private bool isValidName(string i_Value)
         {
             bool validName = i_Value != null;

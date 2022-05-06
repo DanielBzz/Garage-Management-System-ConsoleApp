@@ -44,6 +44,8 @@ namespace Ex03.GarageLogic
             return string.Format(@"{0} % energy left", EnergyPrecentage);
         }
 
+        public abstract string ToShow();
+
         protected bool IsValidNewCapacity(float i_AmountToAdd)
         {
             float newCapacity = m_CurrentEnergyCapacity + i_AmountToAdd;

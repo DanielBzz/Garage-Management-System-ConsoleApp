@@ -45,8 +45,9 @@ namespace Ex03.ConsoleUI
                         break;
                 }
 
-                Console.WriteLine("Please wait");
-                System.Threading.Thread.Sleep(3500);
+                Console.Write("Press Enter to continue");
+                Console.ReadLine();
+                //System.Threading.Thread.Sleep(3500);
                 Console.Clear();
             } while (userInput != 8);
 

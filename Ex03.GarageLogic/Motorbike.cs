@@ -31,12 +31,18 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            string mototbikeInfo = string.Format(@"Motorbike
+            string mototbikeInfo = string.Format(@"Vehicle : Motorbike
 {0}
 EngineCC: {1}
 License type: {2}", base.ToString(), m_EngineCC, m_LicenseType);
 
             return mototbikeInfo;
+        }
+
+        public override string ToShow()
+        {
+            return string.Format(@"Motorbike {0}
+{1}", base.Engine.GetType().Name, base.ToShow());
         }
     }
 }

@@ -42,14 +42,17 @@ namespace Ex03.GarageLogic
 
             foreach (MethodInfo methodInfo in allMethods) // Code duplication -> will deal with it later
             {
-                if (methodInfo.ReturnType is Vehicle)
+                if (methodInfo.ReturnType.Name.Equals("Vehicle"))
                 {
-                    if (i == i_Index)
+                    ParameterInfo[] allParams = methodInfo.GetParameters();
+                    if (allParams.Length == 0) //get rid of it after dealing with BuildVehicleByIndex
                     {
-                        vehicle = methodInfo.Invoke(this, null) as Vehicle;
+                        i++;
+                        if (i == i_Index)
+                        {
+                        vehicle = methodInfo.Invoke(this, allParams) as Vehicle;
+                        }
                     }
-
-                    i++;
                 }
             }
 
@@ -65,6 +68,21 @@ namespace Ex03.GarageLogic
             foreach (Vehicle vehicle in m_VehiclesList)
             {
                 resString.AppendFormat("({0}) {1}", i, vehicle.ToString()).AppendLine().AppendLine();
+                i++;
+            }
+
+            return resString.ToString();
+        }
+
+        public string VehicleListToShow()
+        {
+            StringBuilder resString = new StringBuilder();
+            int i = 1;
+
+            buildVehicleList();
+            foreach (Vehicle vehicle in m_VehiclesList)
+            {
+                resString.AppendFormat("({0}) {1}", i, vehicle.ToShow()).AppendLine().AppendLine();
                 i++;
             }
 

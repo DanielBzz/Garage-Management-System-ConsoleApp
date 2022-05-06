@@ -36,5 +36,13 @@ Fuel type : {0}
 
             return engineInfo;
         }
+
+        public override string ToShow()
+        {
+            string engineInfo = string.Format(@"Motor powered by : Gas
+Fuel type : {0}", r_FuelType);
+
+            return engineInfo;
+        }
     }
 }
