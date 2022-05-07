@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Linq;
 using System.Text;
 using Ex03.GarageLogic;
@@ -13,17 +14,14 @@ namespace Ex03.ConsoleUI
 
         public void EnterNewVehicle()
         {
-            int userInput;
-            Vehicle newVehicle;
+            int userSelection;
 
             Console.WriteLine(Messenger.SelectVehicleMsg());
-            Console.WriteLine(r_VehicleFactory.VehicleListToShow());
-            UILogic.GetUserSelection(out userInput, 1, r_VehicleFactory.VehiclesList.Count);
+            Console.WriteLine(r_VehicleFactory.ShowVehiclesList());
+            UILogic.GetUserSelection(out userSelection, 1, r_VehicleFactory.VehiclesList.Count);
             try
             {
-                newVehicle = r_VehicleFactory.BuildVehicleByIndex(userInput);
-                AddVehicleID(newVehicle);
-                addNewClient(newVehicle);
+                addNewClient(createNewVehicle(userSelection));
             }
             catch (Exception ex)
             {
@@ -31,20 +29,54 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private void AddVehicleID(Vehicle i_NewVehicle)
+        private Vehicle createNewVehicle(int i_UserSelection)
         {
-            string ID;
-            string msg = string.Format(@"Enter {0} plate number", i_NewVehicle.GetType().Name);
-            
-            Console.WriteLine(msg);
-            ID = Console.ReadLine();
-            i_NewVehicle.ID = ID;
+            string ID, model, tyresManufacturer;
+            float currentAirPressure;
+            Vehicle vehicle;
+
+            Console.WriteLine("Enter plate number :");
+            UILogic.GetNoneNullString(out ID);
+            Console.WriteLine("Enter model :");
+            UILogic.GetNoneNullString(out model);
+            Console.WriteLine("Enter tyres manufacturer :");
+            UILogic.GetNoneNullString(out tyresManufacturer);
+            Console.WriteLine("Enter tyres current air pressure :");
+            UILogic.GetValidFloat(out currentAirPressure);
+            vehicle = r_VehicleFactory.CreateVehicleByUserChoice(i_UserSelection, ID, model, tyresManufacturer, currentAirPressure); ;
+            setUniqueData(vehicle);
+
+            return vehicle;
         }
 
-        private void addNewClient(Vehicle i_NewVehicle)
+        private void setUniqueData(Vehicle i_Vehicle)
         {
-            //test
-            r_GarageManager.AddNewClient("sagi", "0526431030", i_NewVehicle);
+            List<MethodInfo> uniqueMethods = r_GarageManager.GetUniqueMethodsList(i_Vehicle);
+
+            foreach (MethodInfo method in uniqueMethods)
+            {
+                if (method.GetParameters()[0].ParameterType.IsEnum)
+                {
+                    // print message and get input
+                    ParameterInfo[] allParams = method.GetParameters();
+                    method.Invoke(i_Vehicle, allParams);
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        private void addNewClient(Vehicle i_Vehicle)
+        {
+            string name, phoneNumber;
+
+            Console.WriteLine(string.Format(@"Enter {0} {1}", i_Vehicle.GetType().Name, "owner's name"));
+            UILogic.GetNoneNullString(out name);
+            Console.WriteLine(string.Format(@"Enter {0} {1}", i_Vehicle.GetType().Name, "owner's phone number"));
+            UILogic.GetNoneNullString(out phoneNumber);
+            r_GarageManager.AddNewClient(name, phoneNumber, i_Vehicle);
         }
 
         public void ShowVehicleList()
@@ -78,7 +110,7 @@ namespace Ex03.ConsoleUI
             string licensePlateNumber;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
-            UILogic.GetLicensePlateString(out licensePlateNumber);
+            UILogic.GetNoneNullString(out licensePlateNumber);
             Console.WriteLine(Messenger.ChangeVehicleStatusMsg());
             UILogic.GetUserSelection(out userNewStatusInput, 1, 3);
             try
@@ -96,7 +128,7 @@ namespace Ex03.ConsoleUI
             string licensePlateNumber;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
-            UILogic.GetLicensePlateString(out licensePlateNumber);
+            UILogic.GetNoneNullString(out licensePlateNumber);
             try
             {
                 r_GarageManager.InflateTyresToMax(licensePlateNumber);
@@ -113,11 +145,11 @@ namespace Ex03.ConsoleUI
             int userFuelTypeInput, amountToAdd;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
-            UILogic.GetLicensePlateString(out licensePlateNumber);
+            UILogic.GetNoneNullString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectFuelTypeMsg());
             UILogic.GetUserSelection(out userFuelTypeInput, 1, 4);
             Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
-            UILogic.GetEnergyAmount(out amountToAdd);
+            UILogic.GetValidInteger(out amountToAdd);
             try
             {
                 r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput, amountToAdd);
@@ -138,9 +170,9 @@ namespace Ex03.ConsoleUI
             int amountToAdd;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
-            UILogic.GetLicensePlateString(out licensePlateNumber);
+            UILogic.GetNoneNullString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
-            UILogic.GetEnergyAmount(out amountToAdd);
+            UILogic.GetValidInteger(out amountToAdd);
             try
             {
                 r_GarageManager.ChargeVehicle(licensePlateNumber, amountToAdd);
@@ -160,7 +192,7 @@ namespace Ex03.ConsoleUI
             string licensePlateNumber;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
-            UILogic.GetLicensePlateString(out licensePlateNumber);
+            UILogic.GetNoneNullString(out licensePlateNumber);
             try
             {
                 Console.WriteLine(r_GarageManager.GetVehicleDetails(licensePlateNumber));

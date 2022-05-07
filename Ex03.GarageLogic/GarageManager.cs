@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using System;
 
 namespace Ex03.GarageLogic
@@ -95,6 +96,38 @@ namespace Ex03.GarageLogic
             checkIfVehicleInGarage(i_VehicleId, out client);
 
             return client.ToString();
+        }
+
+        public static void AddUserDataToVehicle(Vehicle i_Vehicle, string i_ID, string i_Model, string i_TyresManufacturer, float i_CurrentAirPressure)
+        {
+            i_Vehicle.ID = i_ID;
+            i_Vehicle.Model = i_Model;
+            foreach (Tyre tyre in i_Vehicle.Tyres)
+            {
+                tyre.Manufacturer = i_TyresManufacturer;
+                tyre.CurrentAirPressure = i_CurrentAirPressure;
+            }
+        }
+
+        public List<MethodInfo> GetUniqueMethodsList(Vehicle i_Vehicle)
+        {
+            MethodInfo[] allMethods = i_Vehicle.GetType().GetMethods();
+            List<MethodInfo> newUniqueMethodsList = new List<MethodInfo>();
+
+            foreach (MethodInfo method in allMethods)
+            {
+                if (method.Name.Contains("set"))
+                {
+                    newUniqueMethodsList.Add(method);
+                }
+            }
+
+            return newUniqueMethodsList;
+        }
+
+        public bool DynamicTryParse(string i_UserInput, out Type type)
+        {
+
         }
 
         private bool checkIfVehicleInGarage(string i_VehicleId, out Client o_VehicleOwner)

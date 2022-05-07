@@ -17,6 +17,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(Messenger.WelcomeMsg());
                 GetUserSelection(out userInput, 1, 8);
+                Console.Clear();
                 // if every method has try&catch we should initiate try on the switch below and catch afterwards
                 switch (userInput)
                 {
@@ -50,8 +51,9 @@ namespace Ex03.ConsoleUI
                 //System.Threading.Thread.Sleep(3500);
                 Console.Clear();
             } while (userInput != 8);
-
+            
             Console.WriteLine(Messenger.GoodByeMsg());
+            System.Threading.Thread.Sleep(2500);
         }
 
         public static void GetUserSelection(out int o_UserInput, int i_MinValue, int i_MaxValue)
@@ -66,11 +68,11 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static void GetEnergyAmount(out int o_UserInput)
+        public static void GetValidInteger(out int o_UserInput)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());
 
-            while (int.TryParse(input.ToString(), out o_UserInput))
+            while (int.TryParse(input.ToString(), out o_UserInput) == false)
             {
                 Console.WriteLine(Messenger.WrongInputMsg());
                 input.Clear();
@@ -78,7 +80,19 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static void GetLicensePlateString(out string o_UserInput)
+        public static void GetValidFloat(out float o_UserInput)
+        {
+            StringBuilder input = new StringBuilder(Console.ReadLine());
+
+            while (float.TryParse(input.ToString(), out o_UserInput) == false)
+            {
+                Console.WriteLine(Messenger.WrongInputMsg());
+                input.Clear();
+                input.AppendLine(Console.ReadLine());
+            }
+        }
+
+        public static void GetNoneNullString(out string o_UserInput)
         {
             StringBuilder input = new StringBuilder(Console.ReadLine());
 

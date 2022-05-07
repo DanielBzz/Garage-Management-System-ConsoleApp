@@ -34,7 +34,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Vehicle BuildVehicleByIndex(int i_Index) // O(n) -> can be done in O(1) by change Vehicles list to array
+        public Vehicle CreateVehicleByUserChoice(int i_UserChoice, string i_ID, string i_Model, string i_TyresManufacturer, float i_CurrentAirPressure) // O(n) -> can be done in O(1) by change Vehicles list to array
         {
             int i = 0;
             Vehicle vehicle = null;
@@ -48,9 +48,10 @@ namespace Ex03.GarageLogic
                     if (allParams.Length == 0) //get rid of it after dealing with BuildVehicleByIndex
                     {
                         i++;
-                        if (i == i_Index)
+                        if (i == i_UserChoice)
                         {
-                        vehicle = methodInfo.Invoke(this, allParams) as Vehicle;
+                            vehicle = methodInfo.Invoke(this, allParams) as Vehicle;
+                            GarageManager.AddUserDataToVehicle(vehicle, i_ID, i_Model, i_TyresManufacturer, i_CurrentAirPressure);
                         }
                     }
                 }
@@ -61,10 +62,14 @@ namespace Ex03.GarageLogic
 
         public string VehicleListToString()
         {
-            StringBuilder resString = new StringBuilder();
             int i = 1;
+            StringBuilder resString = new StringBuilder();
 
-            buildVehicleList();
+            if (m_VehiclesList.Count == 0)
+            {
+                buildVehicleList();
+            }
+
             foreach (Vehicle vehicle in m_VehiclesList)
             {
                 resString.AppendFormat("({0}) {1}", i, vehicle.ToString()).AppendLine().AppendLine();
@@ -74,12 +79,16 @@ namespace Ex03.GarageLogic
             return resString.ToString();
         }
 
-        public string VehicleListToShow()
+        public string ShowVehiclesList()
         {
             StringBuilder resString = new StringBuilder();
             int i = 1;
 
-            buildVehicleList();
+            if (m_VehiclesList.Count == 0)
+            {
+                buildVehicleList();
+            }
+
             foreach (Vehicle vehicle in m_VehiclesList)
             {
                 resString.AppendFormat("({0}) {1}", i, vehicle.ToShow()).AppendLine().AppendLine();
