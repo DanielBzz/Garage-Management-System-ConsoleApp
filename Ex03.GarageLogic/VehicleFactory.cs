@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
+    // To add new vehicle just need to add vehicle's method -> For example watch 'BuildGasCar' method
     public class VehicleFactory
     {
         private List<Vehicle> m_VehiclesList = new List<Vehicle>();
