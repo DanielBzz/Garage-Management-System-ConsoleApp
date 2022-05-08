@@ -128,11 +128,6 @@ namespace Ex03.ConsoleUI
                 dynamicTryParseParams[1] = Console.ReadLine();
                 parseFlag = dynamicTryParseParams[1] != "" ? true : false;
             }
-            else if(type.Name == "Boolean")
-            {
-                dynamicTryParseParams[1] = Console.ReadLine();
-                parseFlag = dynamicTryParseParams[1] != "" ? true : false;
-            }
             else
             { 
                 try
