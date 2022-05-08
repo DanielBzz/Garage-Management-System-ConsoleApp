@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Reflection;
 using Ex03.GarageLogic;
@@ -19,37 +17,42 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(Messenger.WelcomeMsg());
                 GetUserSelection(out userInput, 1, 8);
                 Console.Clear();
-                // if every method has try&catch we should initiate try on the switch below and catch afterwards
-                switch (userInput)
+                try
                 {
-                    case 1:
-                        r_GarageServices.EnterNewVehicle();
-                        break;
-                    case 2:
-                        r_GarageServices.ShowVehicleList();
-                        break;
-                    case 3:
-                        r_GarageServices.ChangeVehicleStatus();
-                        break;
-                    case 4:
-                        r_GarageServices.InflateTyreToMax();
-                        break;
-                    case 5:
-                        r_GarageServices.Refuel();
-                        break;
-                    case 6:
-                        r_GarageServices.Recharge();
-                        break;
-                    case 7:
-                        r_GarageServices.ShowVehicleFullData();
-                        break;
-                    default:
-                        break;
+                    switch (userInput)
+                    {
+                        case 1:
+                            r_GarageServices.EnterNewVehicle();
+                            break;
+                        case 2:
+                            r_GarageServices.ShowVehicleList();
+                            break;
+                        case 3:
+                            r_GarageServices.ChangeVehicleStatus();
+                            break;
+                        case 4:
+                            r_GarageServices.InflateTyreToMax();
+                            break;
+                        case 5:
+                            r_GarageServices.Refuel();
+                            break;
+                        case 6:
+                            r_GarageServices.Recharge();
+                            break;
+                        case 7:
+                            r_GarageServices.ShowVehicleFullData();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
 
                 Console.Write("Press Enter to continue");
                 Console.ReadLine();
-                //System.Threading.Thread.Sleep(3500);
                 Console.Clear();
             } while (userInput != 8);
             
@@ -66,18 +69,6 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(Messenger.WrongInputMsg());
                 input.Clear();
                 input.Append(Console.ReadLine());
-            }
-        }
-
-        public static void GetValidInteger(out int o_UserInput)
-        {
-            StringBuilder input = new StringBuilder(Console.ReadLine());
-
-            while (int.TryParse(input.ToString(), out o_UserInput) == false)
-            {
-                Console.WriteLine(Messenger.WrongInputMsg());
-                input.Clear();
-                input.AppendLine(Console.ReadLine());
             }
         }
 
@@ -107,8 +98,23 @@ namespace Ex03.ConsoleUI
             o_UserInput = input.ToString();
         }
 
-        public static object DynamicTryParse(MethodInfo i_Method)
+        public static object GetValidData(MethodInfo i_Method)
         {
+            
+            object resObject;
+            while (DynamicTryParse(i_Method, out resObject) == false)
+            {
+                Console.WriteLine(Messenger.WrongInputMsg());
+                resObject = null;
+                resObject = DynamicTryParse(i_Method, out resObject);
+            }
+
+            return resObject;
+        }        
+
+        public static bool DynamicTryParse(MethodInfo i_Method, out object i_ObjectToParse)
+        {
+            object parseFlag = new object();
             Type type;
             Type[] tryParseSignature;
             MethodInfo dynamicTryParse;
@@ -117,8 +123,18 @@ namespace Ex03.ConsoleUI
             dynamicTryParseParams[1] = null;
             type = i_Method.GetParameters()[0].ParameterType;
             tryParseSignature = new[] { typeof(string), type.MakeByRefType() };
-            if (type.Name != "String")
+            if (type.Name == "String")
             {
+                dynamicTryParseParams[1] = Console.ReadLine();
+                parseFlag = dynamicTryParseParams[1] != "" ? true : false;
+            }
+            else if(type.Name == "Boolean")
+            {
+                dynamicTryParseParams[1] = Console.ReadLine();
+                parseFlag = dynamicTryParseParams[1] != "" ? true : false;
+            }
+            else
+            { 
                 try
                 {
                     dynamicTryParse = type.GetMethod("TryParse", tryParseSignature);
@@ -128,50 +144,17 @@ namespace Ex03.ConsoleUI
                     }
 
                     dynamicTryParseParams[0] = Console.ReadLine();
-                    dynamicTryParse.Invoke(type, dynamicTryParseParams);
+                    parseFlag = dynamicTryParse.Invoke(type, dynamicTryParseParams);
                 }
                 catch (ArgumentNullException ane)
                 {
                     Console.WriteLine(ane);
                 }
             }
-            else
-            {
-                dynamicTryParseParams[1] = Console.ReadLine();
-            }
 
-            return dynamicTryParseParams[1];
+            i_ObjectToParse = dynamicTryParseParams[1];
+
+            return (bool)parseFlag;
         }
-        
-        //public static int GetEnumInput(Type i_EnumType)
-        //{
-        //    int parsedEnum = int.MaxValue;
-        //    int maxEnumValue = Enum.GetValues(i_EnumType).Length - 1;
-        //    bool exceptionFlag = false;
-
-        //    while(!exceptionFlag)
-        //    {
-        //        try
-        //        {
-        //            StringBuilder resString = new StringBuilder();
-        //            int i = 1;
-
-        //            if (m_VehiclesList.Count == 0)
-        //            {
-        //                buildVehicleList();
-        //            }
-
-        //            foreach (Vehicle vehicle in m_VehiclesList)
-        //            {
-        //                resString.AppendFormat("({0}) {1}", i, vehicle.ToShow()).AppendLine().AppendLine();
-        //                i++;
-        //            }
-        //            if (!int.TryParse(Console.ReadLine(), out parsedEnum))
-        //            {
-        //                throw new FormatException("")
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

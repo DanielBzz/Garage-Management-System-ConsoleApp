@@ -75,7 +75,7 @@ Choose a method from the list below :
 
         public static string SelectVehicleMsg()
         {
-            return "Please select a vehicle from the following list :";
+            return (new StringBuilder()).AppendFormat("Please select a vehicle from the following list :").AppendLine().ToString();
         }
 
         public static string CamelCasedStringToMsg(string i_MethodName)

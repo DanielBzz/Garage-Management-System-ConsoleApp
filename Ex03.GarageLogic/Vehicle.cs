@@ -72,18 +72,14 @@ namespace Ex03.GarageLogic
             {
                 return m_Engine;
             }
+        }
 
-            //set
-            //{
-            //    if (m_Engine == null)
-            //    {
-            //        m_Engine = value;
-            //    }
-            //    else
-            //    {
-            //        throw new ArgumentException("Vehicle already has an engine");
-            //    }
-            //}
+        public float CurrentEnergy
+        {
+            set
+            {
+                m_Engine.CurrentEnergy = value;
+            }
         }
 
         public List<Tyre> Tyres
@@ -92,13 +88,28 @@ namespace Ex03.GarageLogic
             {
                 return m_Tyres;
             }
-            //set
-            //{
-            //    foreach (Tyre tyre in m_Tyres)
-            //    {
-                    
-            //    }
-            //}
+        }
+
+        public string TyreManufacturer
+        {
+            set
+            {
+                foreach (Tyre tyre in m_Tyres)
+                {
+                    tyre.Manufacturer = value;
+                }
+            }
+        }
+
+        public float TyreCurrentAirPressure
+        {
+            set
+            {
+                foreach (Tyre tyre in m_Tyres)
+                {
+                    tyre.CurrentAirPressure = value;
+                }
+            }
         }
 
         public override string ToString()

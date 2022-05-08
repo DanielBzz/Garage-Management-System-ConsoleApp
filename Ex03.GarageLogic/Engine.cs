@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
     public abstract class Engine
     {
-        protected readonly float r_MaxEnergyCapacity; // make enum maybe of fullTank = 100 , EmptyTank = 0.
-        protected float m_CurrentEnergyCapacity;
-
+        protected readonly float r_MaxEnergyCapacity;
+        protected float m_CurrentEnergy;
+        
         public Engine(float i_MaxCapacity)
         {
             r_MaxEnergyCapacity = i_MaxCapacity;
         }
 
-        public float CurrentEnergyCapacity
+        public float CurrentEnergy
         {
             get
             {
-                return m_CurrentEnergyCapacity;
+                return m_CurrentEnergy;
             }
 
             set
             {
-                if (!IsValidNewCapacity(value - CurrentEnergyCapacity))
+                if (!IsValidNewCapacity(value - CurrentEnergy))
                 {
-                    m_CurrentEnergyCapacity = value;
+                    m_CurrentEnergy = value;
                 }
             }
         }
@@ -35,20 +30,20 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return (m_CurrentEnergyCapacity / r_MaxEnergyCapacity) * 100;
+                return (m_CurrentEnergy / r_MaxEnergyCapacity) * 100;
             }
         }
 
         public override string ToString()
         {
-            return string.Format(@"{0} % energy left", EnergyPrecentage);
+            return string.Format(@"Energy left : {0} %", EnergyPrecentage);
         }
 
         public abstract string ToShow();
 
         protected bool IsValidNewCapacity(float i_AmountToAdd)
         {
-            float newCapacity = m_CurrentEnergyCapacity + i_AmountToAdd;
+            float newCapacity = m_CurrentEnergy + i_AmountToAdd;
             bool overTheMax = r_MaxEnergyCapacity < newCapacity || newCapacity < 0;
 
             if (overTheMax)

@@ -17,64 +17,11 @@ namespace Ex03.ConsoleUI
 
             Console.WriteLine(Messenger.SelectVehicleMsg());
             Console.Write(r_VehicleFactory.ShowVehiclesList());
-            UILogic.GetUserSelection(out userSelection, 1, r_VehicleFactory.VehiclesList.Count);
-            try
-            {
-                vehicle = createNewVehicle(userSelection);
-                addNewClient(vehicle);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private Vehicle createNewVehicle(int i_UserSelection)
-        {
-            Vehicle vehicle;
-
-            vehicle = r_VehicleFactory.CreateVehicleByUserChoice(i_UserSelection);
-            setVehicleData(vehicle);
-
-            return vehicle;
-        }
-
-        private void setVehicleData(Vehicle i_Vehicle)
-        {
-            List<MethodInfo> uniqueMethods = r_GarageManager.BuildSetterMethodsList(i_Vehicle);
-            object[] parametersForMethod = new object[1];
-
-            foreach (MethodInfo method in uniqueMethods)
-            {
-                Type parameterType = method.GetParameters()[0].ParameterType;
-                if (parameterType.IsEnum)
-                {
-                    int userSelection;
-
-                    Console.WriteLine(string.Format("Choose {0} :", Messenger.CamelCasedEnumToString(parameterType)));
-                    Console.Write(Messenger.EnumListMsg(parameterType));
-                    UILogic.GetUserSelection(out userSelection, 1, Enum.GetNames(parameterType).Length);
-                    parametersForMethod[0] = userSelection - 1;
-                }
-                else
-                {
-                    Console.WriteLine(string.Format("Enter {0} :", Messenger.CamelCasedStringToMsg(method.Name.Remove(0, 4))));
-                    parametersForMethod[0] = UILogic.DynamicTryParse(method);
-                }
-
-                method.Invoke(i_Vehicle, parametersForMethod);
-            }
-        }
-
-        private void addNewClient(Vehicle i_Vehicle)
-        {
-            string name, phoneNumber;
-
-            Console.WriteLine(string.Format(@"Enter {0} {1}", i_Vehicle.GetType().Name, "owner's name"));
-            UILogic.GetNoneNullString(out name);
-            Console.WriteLine(string.Format(@"Enter {0} {1}", i_Vehicle.GetType().Name, "owner's phone number"));
-            UILogic.GetNoneNullString(out phoneNumber);
-            r_GarageManager.AddNewClient(name, phoneNumber, i_Vehicle);
+            Console.Write(string.Format("Choose a number from {0} to {1} : ", 1, r_VehicleFactory.VehicleListLength));
+            UILogic.GetUserSelection(out userSelection, 1, r_VehicleFactory.VehicleListLength);
+            Console.Clear();
+            vehicle = createNewVehicle(userSelection);
+            addNewClient(vehicle);
         }
 
         public void ShowVehicleList()
@@ -89,8 +36,7 @@ namespace Ex03.ConsoleUI
             int count = 0;
 
             foreach (string licensePlate in vehiclesList)
-            {
-                
+            { 
                 ++count;
                 Console.WriteLine(string.Format("{0}.{1}{2}", count, licensePlate, Environment.NewLine));
             }
@@ -111,15 +57,8 @@ namespace Ex03.ConsoleUI
             UILogic.GetNoneNullString(out licensePlateNumber);
             Console.WriteLine(Messenger.ChangeVehicleStatusMsg());
             UILogic.GetUserSelection(out userNewStatusInput, 1, 3);
-            try
-            {
-                r_GarageManager.SetNewStatusForVehicle(licensePlateNumber, (eServiceStatus)userNewStatusInput);
-            }
-            catch(ArgumentException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-}
+            r_GarageManager.SetNewStatusForVehicle(licensePlateNumber, (eServiceStatus)userNewStatusInput);
+        }
 
         public void InflateTyreToMax()
         {
@@ -127,70 +66,34 @@ namespace Ex03.ConsoleUI
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetNoneNullString(out licensePlateNumber);
-            try
-            {
-                r_GarageManager.InflateTyresToMax(licensePlateNumber);
-            }
-            catch(ArgumentException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            r_GarageManager.InflateTyresToMax(licensePlateNumber);
         }
 
         public void Refuel()
         {
+            float amountToAdd;
+            int userFuelTypeInput; 
             string licensePlateNumber;
-            int userFuelTypeInput, amountToAdd;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetNoneNullString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectFuelTypeMsg());
             UILogic.GetUserSelection(out userFuelTypeInput, 1, 4);
             Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
-            UILogic.GetValidInteger(out amountToAdd);
-            try
-            {
-                r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput, amountToAdd);
-            }
-            catch (ArgumentException ae)
-            {
-                Console.WriteLine(ae.Message);
-            }
-            catch (ValueOutOfRangeException vore)
-            { 
-                Console.WriteLine(vore.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            UILogic.GetValidFloat(out amountToAdd);
+            r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput, amountToAdd);
         }
 
         public void Recharge()
         {
             string licensePlateNumber;
-            int amountToAdd;
+            float amountToAdd;
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetNoneNullString(out licensePlateNumber);
             Console.WriteLine(Messenger.SelectEnergyAmountToAddMsg());
-            UILogic.GetValidInteger(out amountToAdd);
-            try
-            {
-                r_GarageManager.ChargeVehicle(licensePlateNumber, amountToAdd);
-            }
-            catch (ArgumentException ae)
-            {
-                Console.WriteLine(ae.Message);
-            }
-            catch (ValueOutOfRangeException vora)
-            {
-                Console.WriteLine(vora.Message);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            UILogic.GetValidFloat(out amountToAdd);
+            r_GarageManager.ChargeVehicle(licensePlateNumber, amountToAdd);  
         }
 
         public void ShowVehicleFullData()
@@ -199,18 +102,61 @@ namespace Ex03.ConsoleUI
 
             Console.WriteLine(Messenger.EnterPlateNumberMsg());
             UILogic.GetNoneNullString(out licensePlateNumber);
-            try
+            Console.WriteLine(r_GarageManager.GetVehicleDetails(licensePlateNumber));
+        }
+
+        private Vehicle createNewVehicle(int i_UserSelection)
+        {
+            Vehicle vehicle;
+
+            vehicle = r_VehicleFactory.CreateVehicleByUserChoice(i_UserSelection);
+            setVehicleData(vehicle);
+
+            return vehicle;
+        }
+
+        private void setVehicleData(Vehicle i_Vehicle)
+        {
+            int userSelection;
+            List<MethodInfo> uniqueMethods = r_GarageManager.BuildSetterMethodsList(i_Vehicle);
+            object[] parametersForMethod = new object[1];
+
+            foreach (MethodInfo method in uniqueMethods)
             {
-                Console.WriteLine(r_GarageManager.GetVehicleDetails(licensePlateNumber));
+                Type parameterType = method.GetParameters()[0].ParameterType;
+                if (parameterType.IsEnum)
+                {
+                    Console.WriteLine(string.Format("Choose {0} :", Messenger.CamelCasedEnumToString(parameterType)));
+                    Console.Write(Messenger.EnumListMsg(parameterType));
+                    UILogic.GetUserSelection(out userSelection, 1, Enum.GetNames(parameterType).Length);
+                    parametersForMethod[0] = userSelection - 1;
+                }
+                else if (parameterType.Equals(typeof(bool)))
+                {
+                    Console.WriteLine(string.Format("Choose whether {0} :", Messenger.CamelCasedStringToMsg(method.Name.Remove(0, 4))));
+                    Console.WriteLine(string.Format("(1) Yes {0}(2) No", Environment.NewLine));
+                    UILogic.GetUserSelection(out userSelection, 1, 2);
+                    parametersForMethod[0] = userSelection == 1 ? true : false;
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("Enter {0} :", Messenger.CamelCasedStringToMsg(method.Name.Remove(0, 4))));
+                    parametersForMethod[0] = UILogic.GetValidData(method);
+                }
+
+                method.Invoke(i_Vehicle, parametersForMethod);
             }
-            catch(ArgumentException ae) 
-            {
-                Console.WriteLine(ae.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+        }
+
+        private void addNewClient(Vehicle i_Vehicle)
+        {
+            string name, phoneNumber;
+
+            Console.WriteLine(string.Format(@"Enter {0} {1}", i_Vehicle.GetType().Name, "owner's name"));
+            UILogic.GetNoneNullString(out name);
+            Console.WriteLine(string.Format(@"Enter {0} {1}", i_Vehicle.GetType().Name, "owner's phone number"));
+            UILogic.GetNoneNullString(out phoneNumber);
+            r_GarageManager.AddNewClient(name, phoneNumber, i_Vehicle);
         }
     }
 }

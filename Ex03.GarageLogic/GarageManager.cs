@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<string, Client> m_CurrentClients = new Dictionary<string, Client>();
 
-        public void AddNewClient(string i_Name, string i_PhoneNumber, Vehicle i_Vehicle) // First method in file
+        public void AddNewClient(string i_Name, string i_PhoneNumber, Vehicle i_Vehicle)
         {
             Client newClient;
 
@@ -24,7 +24,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public List<string> ShowAllVehiclesInGarage(eServiceStatus i_FilterStatus) // second method in file , return all vehicle's id //finish
+        public List<string> ShowAllVehiclesInGarage(eServiceStatus i_FilterStatus)
         {
             List<string> vehiclesList = new List<string>(m_CurrentClients.Count);
 
@@ -39,7 +39,7 @@ namespace Ex03.GarageLogic
             return vehiclesList;
         }
 
-        public void SetNewStatusForVehicle(string i_VehicleId, eServiceStatus i_NewStatus) // third method in file
+        public void SetNewStatusForVehicle(string i_VehicleId, eServiceStatus i_NewStatus)
         {
             Client vehicleOwner;
 
@@ -49,7 +49,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void InflateTyresToMax(string i_VehicleId) // forth method in file
+        public void InflateTyresToMax(string i_VehicleId)
         {
             Client vehicleOwner;
 
@@ -59,7 +59,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void RefuelVehicle(string i_VehicleId, eFuelType i_FuelType, float i_AmountToAdd) // fifth method in file
+        public void RefuelVehicle(string i_VehicleId, eFuelType i_FuelType, float i_AmountToAdd)
         {
             Client vehicleOwner;
 
@@ -74,7 +74,7 @@ namespace Ex03.GarageLogic
             engineToRefuel.Refuel(i_AmountToAdd, i_FuelType);
         }
 
-        public void ChargeVehicle(string i_VehicleId, float i_AmountToAdd) // sixth method in file
+        public void ChargeVehicle(string i_VehicleId, float i_AmountToAdd)
         {
             Client vehicleOwner;
 
@@ -89,7 +89,7 @@ namespace Ex03.GarageLogic
             engineToCharge.Charge(i_AmountToAdd);
         }
 
-        public string GetVehicleDetails(string i_VehicleId) // seventh method in file
+        public string GetVehicleDetails(string i_VehicleId)
         {
             Client client;
 
@@ -135,18 +135,6 @@ namespace Ex03.GarageLogic
             }
 
             return vehicleFound;
-        }
-
-        public bool IsVehicleInGarage(string i_VehicleId)
-        {
-            bool isVehicleFound = m_CurrentClients.ContainsKey(i_VehicleId);
-
-            if (!isVehicleFound)
-            {
-                throw new ArgumentException("Vehicle is not in the garage");
-            }
-
-            return isVehicleFound;
         }
     }
 }
