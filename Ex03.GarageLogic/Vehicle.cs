@@ -81,7 +81,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ArgumentException("Vehicle already has a Engine");
+                    throw new ArgumentException("Vehicle already has an engine");
                 }
             }
         }

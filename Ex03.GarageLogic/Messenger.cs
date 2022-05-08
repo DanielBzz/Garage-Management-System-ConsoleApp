@@ -74,5 +74,18 @@ Choose a method from the list below :
         {
             return "Please select a vehicle from the following list :";
         }
+
+        public static string CamelCasedMethodMsg(string i_MethodName)
+        {
+            for (int i = 0; i < i_MethodName.Length - 1; i++)
+            {
+                if (char.IsUpper(i_MethodName[i + 1]) && char.IsLower(i_MethodName[i]))
+                {
+                    i_MethodName = i_MethodName.Insert(i + 1, " ");
+                }
+            }
+
+            return i_MethodName;
+        }
     }
 }

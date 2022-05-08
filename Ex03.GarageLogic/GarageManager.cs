@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            if (checkIfVehicleInGarage(i_VehicleId, out vehicleOwner))
+            if (getVehicleOwner(i_VehicleId, out vehicleOwner))
             {
                 vehicleOwner.Status = i_NewStatus;
             }
@@ -53,7 +53,7 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            if (checkIfVehicleInGarage(i_VehicleId, out vehicleOwner))
+            if (getVehicleOwner(i_VehicleId, out vehicleOwner))
             {
                 vehicleOwner.ClientVehicle.InflateTyresToMax();
             }
@@ -63,7 +63,7 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            checkIfVehicleInGarage(i_VehicleId, out vehicleOwner);
+            getVehicleOwner(i_VehicleId, out vehicleOwner);
             GasEngine engineToRefuel = vehicleOwner.ClientVehicle.Engine as GasEngine;
 
             if (engineToRefuel == null)
@@ -78,7 +78,7 @@ namespace Ex03.GarageLogic
         {
             Client vehicleOwner;
 
-            checkIfVehicleInGarage(i_VehicleId, out vehicleOwner);
+            getVehicleOwner(i_VehicleId, out vehicleOwner);
             ElectricEngine engineToCharge = vehicleOwner.ClientVehicle.Engine as ElectricEngine;
 
             if (engineToCharge == null)
@@ -93,7 +93,7 @@ namespace Ex03.GarageLogic
         {
             Client client;
 
-            checkIfVehicleInGarage(i_VehicleId, out client);
+            getVehicleOwner(i_VehicleId, out client);
 
             return client.ToString();
         }
@@ -116,7 +116,7 @@ namespace Ex03.GarageLogic
 
             foreach (MethodInfo method in allMethods)
             {
-                if (method.Name.Contains("set"))
+                if (method.Name.Contains("set__"))
                 {
                     newUniqueMethodsList.Add(method);
                 }
@@ -125,12 +125,7 @@ namespace Ex03.GarageLogic
             return newUniqueMethodsList;
         }
 
-        public bool DynamicTryParse(string i_UserInput, out Type type)
-        {
-
-        }
-
-        private bool checkIfVehicleInGarage(string i_VehicleId, out Client o_VehicleOwner)
+        private bool getVehicleOwner(string i_VehicleId, out Client o_VehicleOwner)
         {
             bool vehicleFound = m_CurrentClients.TryGetValue(i_VehicleId, out o_VehicleOwner);
 
@@ -140,6 +135,18 @@ namespace Ex03.GarageLogic
             }
 
             return vehicleFound;
+        }
+
+        public bool IsVehicleInGarage(string i_VehicleId)
+        {
+            bool isVehicleFound = m_CurrentClients.ContainsKey(i_VehicleId);
+
+            if (!isVehicleFound)
+            {
+                throw new ArgumentException("Vehicle is not in the garage");
+            }
+
+            return isVehicleFound;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Ex03.GarageLogic
         {
             if (!r_FuelType.Equals(i_FuelType))
             {
-                throw new ArgumentException("Not match fuel type, please select {0} ", Enum.GetName(typeof(eFuelType), r_FuelType));
+                throw new ArgumentException(string.Format("Not match fuel type, please select {0} ", Enum.GetName(typeof(eFuelType), r_FuelType)));
             }
 
             if (!IsValidNewCapacity(i_AmountToAdd))

@@ -13,19 +13,19 @@ namespace Ex03.GarageLogic
         public Motorbike(int i_NumOfWheels, float i_MaxPressure, Engine i_Engine)
             : base(i_NumOfWheels, i_MaxPressure, i_Engine) { }
 
-        public eBikeLicenseType LicenseType
-        {
-            set
-            {
-                m_LicenseType = value;
-            }
-        }
-
-        public float EngineCC
+        public float _EngineCC
         {
             set
             {
                 m_EngineCC = value;
+            }
+        }
+
+        public eBikeLicenseType _LicenseType
+        {
+            set
+            {
+                m_LicenseType = value;
             }
         }
 

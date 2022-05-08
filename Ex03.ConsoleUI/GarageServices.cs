@@ -15,13 +15,15 @@ namespace Ex03.ConsoleUI
         public void EnterNewVehicle()
         {
             int userSelection;
+            Vehicle vehicle;
 
             Console.WriteLine(Messenger.SelectVehicleMsg());
             Console.WriteLine(r_VehicleFactory.ShowVehiclesList());
             UILogic.GetUserSelection(out userSelection, 1, r_VehicleFactory.VehiclesList.Count);
             try
             {
-                addNewClient(createNewVehicle(userSelection));
+                vehicle = createNewVehicle(userSelection);
+                addNewClient(vehicle);
             }
             catch (Exception ex)
             {
@@ -52,18 +54,21 @@ namespace Ex03.ConsoleUI
         private void setUniqueData(Vehicle i_Vehicle)
         {
             List<MethodInfo> uniqueMethods = r_GarageManager.GetUniqueMethodsList(i_Vehicle);
+            object[] parametersForMethod = new object[1];
 
             foreach (MethodInfo method in uniqueMethods)
             {
                 if (method.GetParameters()[0].ParameterType.IsEnum)
                 {
                     // print message and get input
-                    ParameterInfo[] allParams = method.GetParameters();
-                    method.Invoke(i_Vehicle, allParams);
+                    //ParameterInfo[] allParams = method.GetParameters();
+                    //method.Invoke(i_Vehicle, allParams);
                 }
                 else
                 {
-
+                    Console.WriteLine(string.Format("Enter {0} :", Messenger.CamelCasedMethodMsg(method.Name.Remove(0, 4))));
+                    parametersForMethod[0] = UILogic.DynamicTryParse(method);
+                    method.Invoke(i_Vehicle, parametersForMethod);
                 }
             }
         }
@@ -154,12 +159,16 @@ namespace Ex03.ConsoleUI
             {
                 r_GarageManager.RefuelVehicle(licensePlateNumber, (eFuelType)userFuelTypeInput, amountToAdd);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException ae)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ae.Message);
             }
-            catch (ValueOutOfRangeException ex)
+            catch (ValueOutOfRangeException vore)
             { 
+                Console.WriteLine(vore.Message);
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
             }
         }
@@ -177,11 +186,15 @@ namespace Ex03.ConsoleUI
             {
                 r_GarageManager.ChargeVehicle(licensePlateNumber, amountToAdd);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException ae)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ae.Message);
             }
-            catch (ValueOutOfRangeException ex)
+            catch (ValueOutOfRangeException vora)
+            {
+                Console.WriteLine(vora.Message);
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -197,7 +210,11 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(r_GarageManager.GetVehicleDetails(licensePlateNumber));
             }
-            catch(ArgumentException ex) 
+            catch(ArgumentException ae) 
+            {
+                Console.WriteLine(ae.Message);
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

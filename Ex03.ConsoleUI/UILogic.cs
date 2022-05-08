@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -104,6 +105,35 @@ namespace Ex03.ConsoleUI
             }
 
             o_UserInput = input.ToString();
+        }
+
+        public static object DynamicTryParse(MethodInfo i_Method)
+        {
+            Type type;
+            Type[] tryParseSignature;
+            MethodInfo dynamicTryParse;
+            object[] dynamicTryParseParams = new object[2];
+
+            dynamicTryParseParams[1] = null;
+            type = i_Method.GetParameters()[0].ParameterType;
+            tryParseSignature = new[] { typeof(string), type.MakeByRefType() };
+            try
+            {
+                dynamicTryParse = type.GetMethod("TryParse", tryParseSignature);
+                if (dynamicTryParse == null)
+                {
+                    throw new ArgumentNullException(string.Format("Error : Could not find TryParse method for {0}", type));
+                }
+
+                dynamicTryParseParams[0] = Console.ReadLine();
+                dynamicTryParse.Invoke(type, dynamicTryParseParams);
+            }
+            catch (ArgumentNullException ane)
+            {
+                Console.WriteLine(ane);
+            }
+
+            return dynamicTryParseParams[1];
         }
     }
 }
