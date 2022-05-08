@@ -12,10 +12,10 @@ namespace Ex03.GarageLogic
         {
             Client newClient;
 
-            if (!m_CurrentClients.TryGetValue(i_Vehicle.ID, out newClient))
+            if (!m_CurrentClients.TryGetValue(i_Vehicle.PlateNumber, out newClient))
             {
                 newClient = new Client(i_Name, i_PhoneNumber, i_Vehicle);
-                m_CurrentClients.Add(i_Vehicle.ID, newClient);
+                m_CurrentClients.Add(i_Vehicle.PlateNumber, newClient);
             }
             else
             {
@@ -100,7 +100,7 @@ namespace Ex03.GarageLogic
 
         public static void AddUserDataToVehicle(Vehicle i_Vehicle, string i_ID, string i_Model, string i_TyresManufacturer, float i_CurrentAirPressure)
         {
-            i_Vehicle.ID = i_ID;
+            i_Vehicle.PlateNumber = i_ID;
             i_Vehicle.Model = i_Model;
             foreach (Tyre tyre in i_Vehicle.Tyres)
             {
@@ -109,14 +109,14 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public List<MethodInfo> GetUniqueMethodsList(Vehicle i_Vehicle)
+        public List<MethodInfo> BuildSetterMethodsList(Vehicle i_Vehicle)
         {
             MethodInfo[] allMethods = i_Vehicle.GetType().GetMethods();
             List<MethodInfo> newUniqueMethodsList = new List<MethodInfo>();
 
             foreach (MethodInfo method in allMethods)
             {
-                if (method.Name.Contains("set__"))
+                if (method.Name.Contains("set"))
                 {
                     newUniqueMethodsList.Add(method);
                 }

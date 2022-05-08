@@ -34,7 +34,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Vehicle CreateVehicleByUserChoice(int i_UserChoice, string i_ID, string i_Model, string i_TyresManufacturer, float i_CurrentAirPressure) // O(n) -> can be done in O(1) by change Vehicles list to array
+        public Vehicle CreateVehicleByUserChoice(int i_UserChoice) // O(n) -> can be done in O(1) by change Vehicles list to array
         {
             int i = 0;
             Vehicle vehicle = null;
@@ -51,7 +51,6 @@ namespace Ex03.GarageLogic
                         if (i == i_UserChoice)
                         {
                             vehicle = methodInfo.Invoke(this, allParams) as Vehicle;
-                            GarageManager.AddUserDataToVehicle(vehicle, i_ID, i_Model, i_TyresManufacturer, i_CurrentAirPressure);
                         }
                     }
                 }
@@ -60,24 +59,24 @@ namespace Ex03.GarageLogic
             return vehicle;
         }
 
-        public string VehicleListToString()
-        {
-            int i = 1;
-            StringBuilder resString = new StringBuilder();
+        //public string VehicleListToString()
+        //{
+        //    int i = 1;
+        //    StringBuilder resString = new StringBuilder();
 
-            if (m_VehiclesList.Count == 0)
-            {
-                buildVehicleList();
-            }
+        //    if (m_VehiclesList.Count == 0)
+        //    {
+        //        buildVehicleList();
+        //    }
 
-            foreach (Vehicle vehicle in m_VehiclesList)
-            {
-                resString.AppendFormat("({0}) {1}", i, vehicle.ToString()).AppendLine().AppendLine();
-                i++;
-            }
+        //    foreach (Vehicle vehicle in m_VehiclesList)
+        //    {
+        //        resString.AppendFormat("({0}) {1}", i, vehicle.ToString()).AppendLine().AppendLine();
+        //        i++;
+        //    }
 
-            return resString.ToString();
-        }
+        //    return resString.ToString();
+        //}
 
         public string ShowVehiclesList()
         {

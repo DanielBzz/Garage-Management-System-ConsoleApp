@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -18,7 +16,7 @@ namespace Ex03.ConsoleUI
             Vehicle vehicle;
 
             Console.WriteLine(Messenger.SelectVehicleMsg());
-            Console.WriteLine(r_VehicleFactory.ShowVehiclesList());
+            Console.Write(r_VehicleFactory.ShowVehiclesList());
             UILogic.GetUserSelection(out userSelection, 1, r_VehicleFactory.VehiclesList.Count);
             try
             {
@@ -33,43 +31,38 @@ namespace Ex03.ConsoleUI
 
         private Vehicle createNewVehicle(int i_UserSelection)
         {
-            string ID, model, tyresManufacturer;
-            float currentAirPressure;
             Vehicle vehicle;
 
-            Console.WriteLine("Enter plate number :");
-            UILogic.GetNoneNullString(out ID);
-            Console.WriteLine("Enter model :");
-            UILogic.GetNoneNullString(out model);
-            Console.WriteLine("Enter tyres manufacturer :");
-            UILogic.GetNoneNullString(out tyresManufacturer);
-            Console.WriteLine("Enter tyres current air pressure :");
-            UILogic.GetValidFloat(out currentAirPressure);
-            vehicle = r_VehicleFactory.CreateVehicleByUserChoice(i_UserSelection, ID, model, tyresManufacturer, currentAirPressure); ;
-            setUniqueData(vehicle);
+            vehicle = r_VehicleFactory.CreateVehicleByUserChoice(i_UserSelection);
+            setVehicleData(vehicle);
 
             return vehicle;
         }
 
-        private void setUniqueData(Vehicle i_Vehicle)
+        private void setVehicleData(Vehicle i_Vehicle)
         {
-            List<MethodInfo> uniqueMethods = r_GarageManager.GetUniqueMethodsList(i_Vehicle);
+            List<MethodInfo> uniqueMethods = r_GarageManager.BuildSetterMethodsList(i_Vehicle);
             object[] parametersForMethod = new object[1];
 
             foreach (MethodInfo method in uniqueMethods)
             {
-                if (method.GetParameters()[0].ParameterType.IsEnum)
+                Type parameterType = method.GetParameters()[0].ParameterType;
+                if (parameterType.IsEnum)
                 {
-                    // print message and get input
-                    //ParameterInfo[] allParams = method.GetParameters();
-                    //method.Invoke(i_Vehicle, allParams);
+                    int userSelection;
+
+                    Console.WriteLine(string.Format("Choose {0} :", Messenger.CamelCasedEnumToString(parameterType)));
+                    Console.Write(Messenger.EnumListMsg(parameterType));
+                    UILogic.GetUserSelection(out userSelection, 1, Enum.GetNames(parameterType).Length);
+                    parametersForMethod[0] = userSelection - 1;
                 }
                 else
                 {
-                    Console.WriteLine(string.Format("Enter {0} :", Messenger.CamelCasedMethodMsg(method.Name.Remove(0, 4))));
+                    Console.WriteLine(string.Format("Enter {0} :", Messenger.CamelCasedStringToMsg(method.Name.Remove(0, 4))));
                     parametersForMethod[0] = UILogic.DynamicTryParse(method);
-                    method.Invoke(i_Vehicle, parametersForMethod);
                 }
+
+                method.Invoke(i_Vehicle, parametersForMethod);
             }
         }
 

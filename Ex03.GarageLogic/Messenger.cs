@@ -1,4 +1,7 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+using System.Text;
+
+namespace Ex03.GarageLogic
 {
     public class Messenger
     {
@@ -75,7 +78,7 @@ Choose a method from the list below :
             return "Please select a vehicle from the following list :";
         }
 
-        public static string CamelCasedMethodMsg(string i_MethodName)
+        public static string CamelCasedStringToMsg(string i_MethodName)
         {
             for (int i = 0; i < i_MethodName.Length - 1; i++)
             {
@@ -86,6 +89,29 @@ Choose a method from the list below :
             }
 
             return i_MethodName;
+        }
+
+        public static string CamelCasedEnumToString(Type i_EnumType)
+        {
+            string enumMsg = i_EnumType.Name.Remove(0, 1);
+
+            enumMsg = CamelCasedStringToMsg(enumMsg);
+
+            return enumMsg;
+        }
+
+        public static string EnumListMsg(Type i_EnumType)
+        {
+            StringBuilder enumList = new StringBuilder();
+            int i = 1;
+
+            foreach(string name in Enum.GetNames(i_EnumType))
+            {
+                enumList.AppendFormat("({0}) {1}", i, name).AppendLine();
+                i++;
+            }
+
+            return enumList.ToString();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-        private string m_ID;
+        private string m_PlateNumber;
         private string m_Model; 
         private Engine m_Engine;
         private List<Tyre> m_Tyres;
@@ -20,20 +20,20 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string ID
+        public string PlateNumber
         {
             get
             {
-                return m_ID;
+                return m_PlateNumber;
             }
 
             set
             {
-                if (m_ID == null)
+                if (m_PlateNumber == null)
                 {
                     if (isValidName(value))
                     {
-                        m_ID = value;
+                        m_PlateNumber = value;
                     }
                 }
                 else
@@ -73,17 +73,17 @@ namespace Ex03.GarageLogic
                 return m_Engine;
             }
 
-            set
-            {
-                if (m_Engine == null)
-                {
-                    m_Engine = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Vehicle already has an engine");
-                }
-            }
+            //set
+            //{
+            //    if (m_Engine == null)
+            //    {
+            //        m_Engine = value;
+            //    }
+            //    else
+            //    {
+            //        throw new ArgumentException("Vehicle already has an engine");
+            //    }
+            //}
         }
 
         public List<Tyre> Tyres
@@ -92,6 +92,13 @@ namespace Ex03.GarageLogic
             {
                 return m_Tyres;
             }
+            //set
+            //{
+            //    foreach (Tyre tyre in m_Tyres)
+            //    {
+                    
+            //    }
+            //}
         }
 
         public override string ToString()
@@ -99,7 +106,7 @@ namespace Ex03.GarageLogic
             string vehicleInfo = string.Format(@"Vehicle model: {0}
 Vehicle Plate Number: {1}
 {2}
-{3}", m_Model, m_ID, m_Tyres[0].ToString(), m_Engine.ToString());
+{3}", m_Model, m_PlateNumber, m_Tyres[0].ToString(), m_Engine.ToString());
 
             return vehicleInfo;
         }

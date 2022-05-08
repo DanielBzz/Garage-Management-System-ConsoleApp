@@ -13,7 +13,7 @@ namespace Ex03.GarageLogic
         public Motorbike(int i_NumOfWheels, float i_MaxPressure, Engine i_Engine)
             : base(i_NumOfWheels, i_MaxPressure, i_Engine) { }
 
-        public float _EngineCC
+        public float EngineCC
         {
             set
             {
@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public eBikeLicenseType _LicenseType
+        public eBikeLicenseType LicenseType
         {
             set
             {
